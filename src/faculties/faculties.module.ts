@@ -24,11 +24,15 @@ export class FacultiesModule implements OnModuleInit {
     });
 
     this.httpService.axiosRef.interceptors.response.use(response => {
-      // fix charset
-      response.data = iconv
-        .convert(Buffer.from(response.data, 'binary'))
-        .toString();
-      return response;
+      // try to fix charset
+      try {
+        response.data = iconv
+          .convert(Buffer.from(response.data, 'binary'))
+          .toString();
+        return response;
+      } catch (e) {
+        return response;
+      }
     });
   }
 }

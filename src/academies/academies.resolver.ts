@@ -1,5 +1,5 @@
 import { Args, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
-import { Academy } from './entities/academy.entity';
+import { Academy } from './models/academy.model';
 import { AcademiesService } from './academies.service';
 import { Observable } from 'rxjs';
 import { GetAcademyArgs } from './dto/get-academy.args';

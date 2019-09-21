@@ -8,11 +8,18 @@ export class DataGrid {
   private headers: Cheerio;
   private rows: Cheerio;
 
+  protected static selectors = {
+    headers: ['.TblHead td', 'tr[id*="DXHeaders"] td table td'],
+    rows: ['.TblText', '.TblhiText', 'tr[id*="DXDataRow"]'],
+  };
+
   constructor(selectors: string, html: string) {
     this.$ = cheerio.load(html);
     this.root = this.$(selectors);
-    this.headers = this.$(this.root).find('.TblHead td');
-    this.rows = this.$(this.root).find('tr:not(.TblHead)');
+    this.headers = this.$(this.root).find(
+      DataGrid.selectors.headers.join(', '),
+    );
+    this.rows = this.$(this.root).find(DataGrid.selectors.rows.join(', '));
   }
 
   public extract(schema: Schema) {
@@ -20,9 +27,20 @@ export class DataGrid {
     schema.attributes.map(attribute => {
       positions[attribute.name] = this.headers
         .toArray()
-        .findIndex((header: any) =>
-          attribute.columns.includes(this.$(header).text()),
-        );
+        // удаляет пустые ячейки в заголовке таблицы (для новой версии)
+        .filter(header => {
+          const headerText = this.$(header)
+            .text()
+            .trim();
+          return !!headerText.length;
+        })
+        // ищет колонку где искать аттрибут и возвращает ее индекс
+        .findIndex((header: any) => {
+          const headerText = this.$(header)
+            .text()
+            .trim();
+          return attribute.columns.includes(headerText);
+        });
     });
 
     return this.rows.map((i, row) => {
@@ -37,6 +55,7 @@ export class DataGrid {
 
         switch (type) {
           case 'id': {
+            // console.log(elem);
             const stringified = elem.find('a').attr('href');
             const parsed = queryString.parse(stringified);
             value = parsed.id;

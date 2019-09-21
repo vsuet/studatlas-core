@@ -16,7 +16,7 @@ export class FacultiesService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid(
-            '[id*="ContentPage_ucFacultets_Grid"]',
+            'table[id*="ucFacultets"]',
             value.data,
           );
           return dataGrid.extract(FACULTY_SCHEMA);

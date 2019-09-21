@@ -55,7 +55,6 @@ export class DataGrid {
 
         switch (type) {
           case 'id': {
-            // console.log(elem);
             const stringified = elem.find('a').attr('href');
             const parsed = queryString.parse(stringified);
             value = parsed.id;

@@ -1,0 +1,13 @@
+query nsmaTesting {
+  academy(academyId: "nsma") {
+    id
+    faculties {
+      id
+      name
+      abbreviation
+      head
+      phone
+      room
+    }
+  }
+}

@@ -5,12 +5,12 @@ export const FACULTY_SCHEMA: Schema = {
     {
       name: 'id',
       type: 'id',
-      columns: ['Факультет'],
+      columns: ['Факультет', 'Институт'], // институт для СПбГЛТУ и КГУ
     },
     {
       name: 'name',
       type: 'text',
-      columns: ['Факультет'],
+      columns: ['Факультет', 'Институт'], // институт для СПбГЛТУ и КГУ
     },
     {
       name: 'abbreviation',

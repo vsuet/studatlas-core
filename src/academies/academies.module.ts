@@ -6,5 +6,6 @@ import { FacultiesModule } from '../faculties/faculties.module';
 @Module({
   imports: [FacultiesModule],
   providers: [AcademiesResolver, AcademiesService],
+  exports: [FacultiesModule],
 })
 export class AcademiesModule {}

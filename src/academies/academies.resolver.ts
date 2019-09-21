@@ -26,4 +26,9 @@ export class AcademiesResolver {
   faculties(@Parent() academy: Academy) {
     return this.facultiesService.fetchAll(academy);
   }
+
+  @ResolveProperty()
+  groups(@Parent() academy: Academy) {
+    return this.facultiesService.fetchAll(academy);
+  }
 }

@@ -10,6 +10,7 @@ type Academy {
   website: String!
   endpoint: String!
   faculties: [Faculty!]
+  groups: [Group!]
 }
 
 type Faculty {
@@ -19,6 +20,16 @@ type Faculty {
   head: String
   phone: String
   room: String
+}
+
+type Group {
+  id: ID!
+  name: String!
+  year: Int!
+  countAll: Int!
+  countCommon: Int!
+  countSpecial: Int!
+  curricula: String!
 }
 
 type Query {

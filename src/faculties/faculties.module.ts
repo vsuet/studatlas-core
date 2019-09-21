@@ -1,38 +1,11 @@
-import { HttpModule, HttpService, Module, OnModuleInit } from '@nestjs/common';
+import { HttpModule, HttpService, Module } from '@nestjs/common';
 import { FacultiesService } from './faculties.service';
 import { FacultiesResolver } from './faculties.resolver';
-import { Iconv } from 'iconv';
-import { Buffer } from 'safe-buffer';
-
-const iconv = new Iconv('CP1251', 'UTF-8');
+import { GrabberModule } from '../grabber/grabber.module';
 
 @Module({
-  imports: [
-    HttpModule.register({
-      responseType: 'arraybuffer',
-    }),
-  ],
+  imports: [GrabberModule],
   providers: [FacultiesService, FacultiesResolver],
   exports: [FacultiesService],
 })
-export class FacultiesModule implements OnModuleInit {
-  constructor(private httpService: HttpService) {}
-
-  public onModuleInit() {
-    this.httpService.axiosRef.interceptors.request.use(req => {
-      return req;
-    });
-
-    this.httpService.axiosRef.interceptors.response.use(response => {
-      // try to fix charset
-      try {
-        response.data = iconv
-          .convert(Buffer.from(response.data, 'binary'))
-          .toString();
-        return response;
-      } catch (e) {
-        return response;
-      }
-    });
-  }
-}
+export class FacultiesModule {}

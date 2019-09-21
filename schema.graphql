@@ -8,6 +8,7 @@ type Academy {
     abbreviation: String!
     endpoint: String!
     faculties: [Faculty!]
+    groups: [Group!]
     id: ID!
     name: String!
     website: String!
@@ -20,6 +21,16 @@ type Faculty {
     name: String!
     phone: String
     room: String
+}
+
+type Group {
+    countAll: Int!
+    countCommon: Int!
+    countSpecial: Int!
+    curricula: String!
+    id: ID!
+    name: String!
+    year: Int!
 }
 
 type Query {

@@ -1,38 +1,54 @@
+import * as queryString from 'query-string';
 import { Schema } from '../interfaces/schema.interface';
+import * as cheerio from 'cheerio';
 
 export class DataGrid {
-  private document: HTMLElement;
-  private headers: HTMLElement[] = [];
-  private rows: HTMLTableRowElement[];
+  private readonly $: CheerioStatic;
+  private root: Cheerio;
+  private headers: Cheerio;
+  private rows: Cheerio;
 
-  constructor(document: HTMLElement) {
-    this.document = document;
-    this.initHeaders();
-    this.initRows();
-  }
-
-  protected initHeaders() {
-    this.headers = Array.from(this.document.querySelectorAll('.TblHead td'));
-  }
-
-  protected initRows() {
-    const rows = Array.from(this.document.querySelectorAll('tr'));
-    rows.shift();
-    this.rows = rows;
+  constructor(selectors: string, html: string) {
+    this.$ = cheerio.load(html);
+    this.root = this.$(selectors);
+    this.headers = this.$(this.root).find('.TblHead td');
+    this.rows = this.$(this.root).find('tr:not(.TblHead)');
   }
 
   public extract(schema: Schema) {
     const positions = {};
     schema.attributes.map(attribute => {
-      positions[attribute.name] = Array.from(this.headers).findIndex(
-        (header: any) => attribute.columns.includes(header.text),
-      );
+      positions[attribute.name] = this.headers
+        .toArray()
+        .findIndex((header: any) =>
+          attribute.columns.includes(this.$(header).text()),
+        );
     });
-    return Array.from(this.rows).map(row => {
+
+    return this.rows.map((i, row) => {
       const entity = {};
-      const cells = Array.from(row.querySelectorAll('td')) as any;
-      Object.keys(positions).map(attribute => {
-        entity[attribute] = cells[positions[attribute]].text;
+      const cells = this.$(row)
+        .find('td')
+        .toArray();
+
+      schema.attributes.map(({ name, type }) => {
+        let value;
+        const elem = this.$(cells[positions[name]]);
+
+        switch (type) {
+          case 'id': {
+            const stringified = elem.find('a').attr('href');
+            const parsed = queryString.parse(stringified);
+            value = parsed.id;
+            break;
+          }
+          case 'text':
+          default: {
+            const text = elem.text().trim();
+            value = !!text.length ? text : null;
+          }
+        }
+        entity[name] = value;
       });
       return entity;
     });

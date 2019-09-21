@@ -1,3 +1,3 @@
 export interface Schema {
-  attributes: Array<{ name: string; columns: string[] }>;
+  attributes: Array<{ name: string; columns: string[]; type: 'id' | 'text' }>;
 }

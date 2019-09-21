@@ -1,0 +1,28 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type Academy {
+    abbreviation: String!
+    endpoint: String!
+    faculties: [Faculty!]
+    id: ID!
+    name: String!
+    website: String!
+}
+
+type Faculty {
+    abbreviation: String
+    head: String
+    id: ID!
+    name: String!
+    phone: String
+    room: String
+}
+
+type Query {
+    academies: [Academy!]!
+    academy(academyId: String!): Academy!
+}

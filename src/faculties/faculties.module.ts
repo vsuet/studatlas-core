@@ -20,8 +20,6 @@ export class FacultiesModule implements OnModuleInit {
 
   public onModuleInit() {
     this.httpService.axiosRef.interceptors.request.use(req => {
-      console.log('request', req);
-
       return req;
     });
 

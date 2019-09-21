@@ -24,6 +24,6 @@ export class AcademiesResolver {
 
   @ResolveProperty()
   faculties(@Parent() academy: Academy) {
-    return this.facultiesService.findAll(academy);
+    return this.facultiesService.fetchAll(academy);
   }
 }

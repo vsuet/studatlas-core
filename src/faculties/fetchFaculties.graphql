@@ -1,0 +1,13 @@
+query fetchFaculties {
+  academies {
+    id
+    faculties {
+      id
+      name
+      abbreviation
+      head
+      phone
+      room
+    }
+  }
+}

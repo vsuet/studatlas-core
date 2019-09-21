@@ -6,12 +6,23 @@ schema {
 
 type Academy {
     abbreviation: String!
+    divisions: [Division!]
     endpoint: String!
     faculties: [Faculty!]
     groups: [Group!]
     id: ID!
     name: String!
+    specialities: [Speciality!]
     website: String!
+}
+
+type Division {
+    abbreviation: String!
+    head: String
+    id: ID!
+    name: String!
+    phone: String
+    room: String
 }
 
 type Faculty {
@@ -28,7 +39,7 @@ type Group {
     countCommon: Int!
     countSpecial: Int!
     countTargeted: Int!
-    curricula: String!
+    curricula: String
     id: ID!
     name: String!
     year: Int!
@@ -37,4 +48,12 @@ type Group {
 type Query {
     academies: [Academy!]!
     academy(academyId: String!): Academy!
+}
+
+type Speciality {
+    code: String!
+    id: ID!
+    name: String!
+    qualification: String!
+    shortName: String!
 }

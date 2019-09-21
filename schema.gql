@@ -11,6 +11,17 @@ type Academy {
   endpoint: String!
   faculties: [Faculty!]
   groups: [Group!]
+  divisions: [Division!]
+  specialities: [Speciality!]
+}
+
+type Division {
+  id: ID!
+  name: String!
+  abbreviation: String!
+  head: String
+  phone: String
+  room: String
 }
 
 type Faculty {
@@ -36,4 +47,12 @@ type Group {
 type Query {
   academy(academyId: String!): Academy!
   academies: [Academy!]!
+}
+
+type Speciality {
+  id: ID!
+  shortName: String!
+  name: String!
+  code: String!
+  qualification: String
 }

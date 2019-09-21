@@ -1,15 +1,12 @@
 query nsmaTesting {
   academy(academyId: "nsma") {
     id
-    groups {
+    specialities {
       id
+      shortName
       name
-      year
-      curricula
-      countAll
-      countCommon
-      countTargeted
-      countSpecial
+      code
+      qualification
     }
   }
 }

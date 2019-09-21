@@ -63,6 +63,7 @@ export class DataGrid {
           case 'numeric': {
             const numVal = elem.text().trim();
             value = !!numVal.length ? Number(numVal) : null;
+            break;
           }
           case 'text':
           default: {

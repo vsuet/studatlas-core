@@ -1,15 +1,25 @@
-import { Args, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
+import {
+  Args,
+  Query,
+  Resolver,
+  ResolveProperty,
+  Parent,
+} from '@nestjs/graphql';
 import { Academy } from './models/academy.model';
 import { AcademiesService } from './academies.service';
 import { Observable } from 'rxjs';
 import { GetAcademyArgs } from './dto/get-academy.args';
 import { FacultiesService } from '../faculties/faculties.service';
+import { GroupsService } from '../groups/groups.service';
+import { Faculty } from '../faculties/models/faculty.model';
+import { Group } from '../groups/models/group.model';
 
 @Resolver(of => Academy)
 export class AcademiesResolver {
   constructor(
     private readonly academiesService: AcademiesService,
     private readonly facultiesService: FacultiesService,
+    private readonly groupsService: GroupsService,
   ) {}
 
   @Query(returns => Academy, { name: 'academy' })
@@ -23,12 +33,12 @@ export class AcademiesResolver {
   }
 
   @ResolveProperty()
-  faculties(@Parent() academy: Academy) {
+  faculties(@Parent() academy: Academy): Observable<Faculty[]> {
     return this.facultiesService.fetchAll(academy);
   }
 
   @ResolveProperty()
-  groups(@Parent() academy: Academy) {
-    return this.facultiesService.fetchAll(academy);
+  groups(@Parent() academy: Academy): Observable<Group[]> {
+    return this.groupsService.fetchAll(academy);
   }
 }

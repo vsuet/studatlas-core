@@ -22,7 +22,7 @@ export class DataGrid {
     this.rows = this.$(this.root).find(DataGrid.selectors.rows.join(', '));
   }
 
-  public extract(schema: Schema) {
+  public extract(schema: Schema): any {
     const positions = {};
     schema.attributes.map(attribute => {
       positions[attribute.name] = this.headers
@@ -59,6 +59,10 @@ export class DataGrid {
             const parsed = queryString.parse(stringified);
             value = parsed.id;
             break;
+          }
+          case 'numeric': {
+            const numVal = elem.text().trim();
+            value = !!numVal.length ? Number(numVal) : null;
           }
           case 'text':
           default: {

@@ -27,6 +27,7 @@ type Group {
     countAll: Int!
     countCommon: Int!
     countSpecial: Int!
+    countTargeted: Int!
     curricula: String!
     id: ID!
     name: String!

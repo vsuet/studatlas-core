@@ -15,11 +15,14 @@ export class Group {
   countAll: number;
 
   @Field(type => Int)
-  countCommon: string;
+  countCommon: number;
 
   @Field(type => Int)
-  countSpecial: string;
+  countTargeted: number;
 
-  @Field()
+  @Field(type => Int)
+  countSpecial: number;
+
+  @Field({ nullable: true })
   curricula?: string;
 }

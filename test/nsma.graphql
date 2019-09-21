@@ -1,13 +1,15 @@
 query nsmaTesting {
   academy(academyId: "nsma") {
     id
-    faculties {
+    groups {
       id
       name
-      abbreviation
-      head
-      phone
-      room
+      year
+      curricula
+      countAll
+      countCommon
+      countTargeted
+      countSpecial
     }
   }
 }

@@ -2,7 +2,7 @@ import { HttpService, Injectable } from '@nestjs/common';
 import { Academy } from '../academies/models/academy.model';
 import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
-import { FACULTY_SCHEMA } from '../faculties/mocks/faculty-schema.mock';
+import { GROUP_SCHEMA } from './mocks/group-schema.mock';
 
 @Injectable()
 export class GroupsService {
@@ -19,7 +19,7 @@ export class GroupsService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucGroups"]', value.data);
-          return dataGrid.extract(FACULTY_SCHEMA);
+          return dataGrid.extract(GROUP_SCHEMA);
         }),
       );
   }

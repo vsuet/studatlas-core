@@ -28,8 +28,9 @@ type Group {
   year: Int!
   countAll: Int!
   countCommon: Int!
+  countTargeted: Int!
   countSpecial: Int!
-  curricula: String!
+  curricula: String
 }
 
 type Query {

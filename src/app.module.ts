@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AcademiesModule } from './academies/academies.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { GroupsModule } from './groups/groups.module';
 
 @Module({
   imports: [
@@ -12,7 +11,6 @@ import { GroupsModule } from './groups/groups.module';
       autoSchemaFile: 'schema.gql',
       debug: true,
     }),
-    // GroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -7,25 +7,31 @@ export class Faculty {
   @Field(type => ID)
   id: string;
 
-  @Field()
+  @Field({ description: 'Название кафедры' })
   name: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Сокращение' })
   abbreviation?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Декан' })
   head?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Телефон деканата' })
   phone?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Аудитория' })
   room?: string;
 
-  @Field(type => [Group], { nullable: true })
+  @Field(type => [Group], {
+    nullable: true,
+    description: 'Группы факультета',
+  })
   groups?: Group[];
 
-  @Field(type => [Speciality], { nullable: true })
+  @Field(type => [Speciality], {
+    nullable: true,
+    description: 'Специальности факультета',
+  })
   specialities?: Speciality[];
 
   academyId: string;

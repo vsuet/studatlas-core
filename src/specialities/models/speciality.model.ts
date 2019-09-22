@@ -8,25 +8,33 @@ export class Speciality {
   @Field(type => ID)
   id: string;
 
-  @Field()
+  @Field({ description: 'Краткое наименование' })
   shortName: string;
 
-  @Field()
+  @Field({ description: 'Название' })
   name: string;
 
-  @Field()
+  @Field({ description: 'Шифр' })
   code: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Квалификация' })
   qualification?: string;
 
-  @Field(type => [Group], { nullable: true })
+  @Field(type => [Group], {
+    nullable: true,
+    description: 'Группы, обучающиеся по этой специальности',
+  })
   groups?: Group[];
 
-  @Field(type => Division, { nullable: true })
+  @Field(type => Division, {
+    nullable: true,
+    description: 'Кафедра, к которой относится специальность (если есть)',
+  })
   division?: Division;
 
-  @Field(type => Faculty)
+  @Field(type => Faculty, {
+    description: 'Факультет, к которому относится специальность',
+  })
   faculty: Faculty;
 
   academyId: string;

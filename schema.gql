@@ -17,34 +17,74 @@ type Academy {
 
 type Division {
   id: ID!
+
+  """Название кафедры"""
   name: String!
+
+  """Сокращение"""
   abbreviation: String!
+
+  """Заведующий кафедрой"""
   head: String
+
+  """Телефон кафедры"""
   phone: String
+
+  """Аудитория"""
   room: String
 }
 
 type Faculty {
   id: ID!
+
+  """Название кафедры"""
   name: String!
+
+  """Сокращение"""
   abbreviation: String
+
+  """Декан"""
   head: String
+
+  """Телефон деканата"""
   phone: String
+
+  """Аудитория"""
   room: String
+
+  """Группы факультета"""
   groups: [Group!]
+
+  """Специальности факультета"""
   specialities: [Speciality!]
 }
 
 type Group {
   id: ID!
+
+  """Название группы"""
   name: String!
+
+  """Курс"""
   year: Int!
+
+  """Всего студентов"""
   countAll: Int!
+
+  """На общих основаниях"""
   countCommon: Int!
+
+  """Целевики"""
   countTargeted: Int!
+
+  """Внеплановый прием"""
   countSpecial: Int!
+
+  """Учебный план группы"""
   curricula: String
-  speciality: Speciality!
+
+  """Специальность группы"""
+  speciality: Speciality
 }
 
 type Query {
@@ -95,11 +135,25 @@ type Query {
 
 type Speciality {
   id: ID!
+
+  """Краткое наименование"""
   shortName: String!
+
+  """Название"""
   name: String!
+
+  """Шифр"""
   code: String!
+
+  """Квалификация"""
   qualification: String
+
+  """Группы, обучающиеся по этой специальности"""
   groups: [Group!]
+
+  """Кафедра, к которой относится специальность (если есть)"""
   division: Division
+
+  """Факультет, к которому относится специальность"""
   faculty: Faculty!
 }

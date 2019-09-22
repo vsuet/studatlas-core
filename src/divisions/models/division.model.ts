@@ -5,19 +5,19 @@ export class Division {
   @Field(type => ID)
   id: string;
 
-  @Field()
+  @Field({ description: 'Название кафедры' })
   name: string;
 
-  @Field()
+  @Field({ description: 'Сокращение' })
   abbreviation: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Заведующий кафедрой' })
   head?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Телефон кафедры' })
   phone?: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, description: 'Аудитория' })
   room?: string;
 
   academyId: string;

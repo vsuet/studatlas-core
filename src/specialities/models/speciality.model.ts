@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Group } from '../../groups/models/group.model';
-import { Academy } from '../../academies/models/academy.model';
+import { Division } from '../../divisions/models/division.model';
 
 @ObjectType()
 export class Speciality {
@@ -22,5 +22,10 @@ export class Speciality {
   @Field(type => [Group], { nullable: true })
   groups?: Group[];
 
+  @Field(type => Division, { nullable: true })
+  division?: Division;
+
   academyId?: string;
+
+  divisionId?: number;
 }

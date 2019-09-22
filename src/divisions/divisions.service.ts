@@ -22,7 +22,8 @@ export class DivisionsService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucKaf"]', value.data);
-          return dataGrid.extract(DIVISION_SCHEMA);
+          const entities = dataGrid.extract(DIVISION_SCHEMA);
+          return entities.map(entity => Object.assign(entity, { academyId }));
         }),
       );
   }

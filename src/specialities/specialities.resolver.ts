@@ -12,13 +12,26 @@ import { FetchSpecialityArgs } from './dto/fetch-speciality.args';
 import { FetchSpecialitiesArgs } from './dto/fetch-specialities.args';
 import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
+import { DivisionsService } from '../divisions/divisions.service';
+import { Division } from '../divisions/models/division.model';
 
 @Resolver(of => Speciality)
 export class SpecialitiesResolver {
   constructor(
+    private readonly divisionsService: DivisionsService,
     private readonly groupsService: GroupsService,
     private readonly specialitiesService: SpecialitiesService,
   ) {}
+
+  @ResolveProperty()
+  division(@Parent() { divisionId, academyId }: Speciality): Observable<
+    Division
+  > {
+    return this.divisionsService.fetchById({
+      academyId,
+      divisionId,
+    });
+  }
 
   @ResolveProperty()
   groups(@Parent() { id, academyId }: Speciality): Observable<Group[]> {

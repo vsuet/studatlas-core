@@ -99,4 +99,5 @@ type Speciality {
   code: String!
   qualification: String
   groups: [Group!]
+  division: Division
 }

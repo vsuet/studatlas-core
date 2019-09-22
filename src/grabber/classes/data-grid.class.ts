@@ -58,7 +58,7 @@ export class DataGrid {
             case 'id': {
               const stringified = elem.find('a').attr('href');
               const parsed = queryString.parse(stringified);
-              value = parsed.id;
+              value = parsed.id || parsed['Ved.aspx?id'];
               break;
             }
             case 'numeric': {

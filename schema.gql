@@ -47,7 +47,47 @@ type Group {
 type Query {
   academy(academyId: String!): Academy!
   academies: [Academy!]!
+  faculty(
+    """ID факультета"""
+    facultyId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Faculty!
   faculties(academyId: ID!): [Faculty!]!
+  group(
+    """ID группы"""
+    groupId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Group!
+  groups(
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  speciality(
+    """ID специальности"""
+    specialityId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Speciality!
+  specialities(
+    """ID вуза"""
+    academyId: ID!
+  ): [Speciality!]!
+  division(
+    """ID кафедры"""
+    divisionId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Division!
+  divisions(
+    """ID вуза"""
+    academyId: ID!
+  ): [Division!]!
 }
 
 type Speciality {

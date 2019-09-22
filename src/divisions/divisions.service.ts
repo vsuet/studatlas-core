@@ -3,17 +3,20 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { DIVISION_SCHEMA } from './mocks/division-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
+import { FetchDivisionArgs } from './dto/fetch-division.args';
+import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
 
 @Injectable()
 export class DivisionsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetchAll(academyId: string) {
+  fetch(academyId: string, params?: any) {
     return this.grabberService
       .createClient(academyId)
       .get('/Dek/Default.aspx', {
         params: {
           mode: 'kaf',
+          ...params,
         },
       })
       .pipe(
@@ -22,5 +25,15 @@ export class DivisionsService {
           return dataGrid.extract(DIVISION_SCHEMA);
         }),
       );
+  }
+
+  fetchById({ academyId, divisionId }: FetchDivisionArgs) {
+    return this.fetch(academyId, { id: divisionId }).pipe(
+      map(divisions => divisions[0]),
+    );
+  }
+
+  fetchAll({ academyId }: FetchDivisionsArgs) {
+    return this.fetch(academyId);
   }
 }

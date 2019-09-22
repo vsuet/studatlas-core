@@ -3,17 +3,20 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { GROUP_SCHEMA } from './mocks/group-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
+import { FetchGroupArgs } from './dto/fetch-group.args';
+import { FetchGroupsArgs } from './dto/fetch-groups.args';
 
 @Injectable()
 export class GroupsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetchAll(academyId: string) {
+  fetch(academyId: string, params?: any) {
     return this.grabberService
       .createClient(academyId)
       .get('/Dek/Default.aspx', {
         params: {
           mode: 'group',
+          ...params,
         },
       })
       .pipe(
@@ -22,5 +25,15 @@ export class GroupsService {
           return dataGrid.extract(GROUP_SCHEMA);
         }),
       );
+  }
+
+  fetchById({ academyId, groupId }: FetchGroupArgs) {
+    return this.fetch(academyId, { id: groupId }).pipe(
+      map(groups => groups[0]),
+    );
+  }
+
+  fetchAll({ academyId }: FetchGroupsArgs) {
+    return this.fetch(academyId);
   }
 }

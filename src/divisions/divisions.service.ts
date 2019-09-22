@@ -1,17 +1,17 @@
-import { HttpService, Injectable } from '@nestjs/common';
-import { Academy } from '../academies/models/academy.model';
+import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { DIVISION_SCHEMA } from './mocks/division-schema.mock';
+import { GrabberService } from '../grabber/grabber.service';
 
 @Injectable()
 export class DivisionsService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly grabberService: GrabberService) {}
 
-  fetchAll(academy: Academy) {
-    return this.httpService
+  fetchAll(academyId: string) {
+    return this.grabberService
+      .createClient(academyId)
       .get('/Dek/Default.aspx', {
-        baseURL: academy.endpoint,
         params: {
           mode: 'kaf',
         },

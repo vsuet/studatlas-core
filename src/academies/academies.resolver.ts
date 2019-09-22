@@ -38,22 +38,22 @@ export class AcademiesResolver {
   }
 
   @ResolveProperty()
-  faculties(@Parent() academy: Academy): Observable<Faculty[]> {
-    return this.facultiesService.fetchAll(academy);
+  faculties(@Parent() { id }: Academy): Observable<Faculty[]> | any {
+    return this.facultiesService.fetchAll(id);
   }
 
   @ResolveProperty()
-  groups(@Parent() academy: Academy): Observable<Group[]> {
-    return this.groupsService.fetchAll(academy);
+  groups(@Parent() { id }: Academy): Observable<Group[]> | any {
+    return this.groupsService.fetchAll(id);
   }
 
   @ResolveProperty()
-  divisions(@Parent() academy: Academy): Observable<Division[]> {
-    return this.divisionsService.fetchAll(academy);
+  divisions(@Parent() { id }: Academy): Observable<Division[]> | any {
+    return this.divisionsService.fetchAll(id);
   }
 
   @ResolveProperty()
-  specialities(@Parent() academy: Academy): Observable<Division[]> {
-    return this.specialitiesService.fetchAll(academy);
+  specialities(@Parent() { id }: Academy): Observable<Division[]> | any {
+    return this.specialitiesService.fetchAll(id);
   }
 }

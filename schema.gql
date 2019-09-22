@@ -47,6 +47,7 @@ type Group {
 type Query {
   academy(academyId: String!): Academy!
   academies: [Academy!]!
+  faculties(academyId: ID!): [Faculty!]!
 }
 
 type Speciality {

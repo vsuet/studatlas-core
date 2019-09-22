@@ -23,6 +23,12 @@ type Book {
 
   """Группа, в которой учится студент"""
   group: Group!
+
+  """Записи из зачетки"""
+  entries(
+    """Семестр"""
+    semester: Int
+  ): [Entry!]!
 }
 
 type Division {
@@ -49,6 +55,29 @@ type Division {
     year: String
     semester: Int
   ): Statistics!
+}
+
+type Entry {
+  """Семестр"""
+  semester: Int!
+
+  """Дисциплина"""
+  subject: String!
+
+  """Оценка"""
+  mark: String!
+
+  """Часов"""
+  hours: Int!
+
+  """Преподаватель"""
+  teacher: String
+
+  """Блок"""
+  unit: String!
+
+  """Тип"""
+  type: String!
 }
 
 type Faculty {

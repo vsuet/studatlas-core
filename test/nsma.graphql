@@ -60,3 +60,19 @@ query xxx {
     }
   }
 }
+
+query xxx {
+  book(academyId: "nsma", bookId: 45422) {
+    id
+    code
+    entries(semester: 1) {
+      semester
+      subject
+      mark
+      hours
+      unit
+      type
+      teacher
+    }
+  }
+}

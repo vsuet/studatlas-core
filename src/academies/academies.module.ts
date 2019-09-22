@@ -7,11 +7,13 @@ import { SpecialitiesModule } from '../specialities/specialities.module';
 import { DivisionsModule } from '../divisions/divisions.module';
 import { BooksModule } from '../books/books.module';
 import { StatisticsModule } from '../statistics/statistics.module';
+import { DocumentsModule } from '../documents/documents.module';
 
 @Module({
   imports: [
     BooksModule,
     DivisionsModule,
+    DocumentsModule,
     FacultiesModule,
     GroupsModule,
     SpecialitiesModule,

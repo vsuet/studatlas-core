@@ -57,6 +57,13 @@ type Division {
   ): Statistics!
 }
 
+type Document {
+  id: ID
+  unit: String!
+  year: String!
+  yearNumber: Int!
+}
+
 type Entry {
   """Семестр"""
   semester: Int!
@@ -202,6 +209,13 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): Book!
+  document(
+    """ID ведомости"""
+    documentId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Document!
 }
 
 type Speciality {

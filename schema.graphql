@@ -39,6 +39,9 @@ type Division {
 
   """Аудитория"""
   room: String
+
+  """Статистика по кафедре"""
+  statistics: Statistics!
 }
 
 type Faculty {
@@ -64,6 +67,9 @@ type Faculty {
 
   """Специальности факультета"""
   specialities: [Speciality!]
+
+  """Статистика по факультету"""
+  statistics: Statistics!
 }
 
 type Group {
@@ -166,4 +172,21 @@ type Speciality {
 
   """Факультет, к которому относится специальность"""
   faculty: Faculty!
+}
+
+type Statistics {
+  """Всего ведомостей"""
+  all: Int!
+
+  """Не проставлены контрольные точки"""
+  noCheckpoints: Int!
+
+  """Не заполнен рейтинг"""
+  noRatings: Int!
+
+  """Незакрытые"""
+  notClosed: Int!
+
+  """Пустые"""
+  blank: Int!
 }

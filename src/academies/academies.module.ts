@@ -6,6 +6,7 @@ import { GroupsModule } from '../groups/groups.module';
 import { SpecialitiesModule } from '../specialities/specialities.module';
 import { DivisionsModule } from '../divisions/divisions.module';
 import { BooksModule } from '../books/books.module';
+import { StatisticsModule } from '../statistics/statistics.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { BooksModule } from '../books/books.module';
     FacultiesModule,
     GroupsModule,
     SpecialitiesModule,
+    StatisticsModule,
   ],
   providers: [AcademiesResolver, AcademiesService],
   exports: [AcademiesService],

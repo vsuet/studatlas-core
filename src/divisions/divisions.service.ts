@@ -29,7 +29,7 @@ export class DivisionsService {
   }
 
   fetchById({ academyId, divisionId }: FetchDivisionArgs) {
-    return this.fetch(academyId, { id: divisionId }).pipe(
+    return this.fetch(academyId, { id: divisionId, f: 'kaf' }).pipe(
       map(divisions => divisions[0]),
     );
   }

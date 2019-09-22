@@ -6,3 +6,17 @@ query nsmaTesting {
     }
   }
 }
+
+query xxx {
+  division(academyId: "nsma", divisionId: 1) {
+    id
+    name
+    statistics {
+      all
+      noCheckpoints
+      noRatings
+      notClosed
+      blank
+    }
+  }
+}

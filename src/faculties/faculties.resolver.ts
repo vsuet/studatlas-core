@@ -14,6 +14,8 @@ import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
 import { SpecialitiesService } from '../specialities/specialities.service';
 import { Speciality } from '../specialities/models/speciality.model';
+import { Statistics } from '../statistics/models/statistics.model';
+import { StatisticsService } from '../statistics/statistics.service';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver {
@@ -21,7 +23,16 @@ export class FacultiesResolver {
     private readonly facultiesService: FacultiesService,
     private readonly groupsService: GroupsService,
     private readonly specialitiesService: SpecialitiesService,
+    private readonly statisticsService: StatisticsService,
   ) {}
+
+  @ResolveProperty()
+  statistics(@Parent() { id, academyId }: Faculty): Observable<Statistics> {
+    return this.statisticsService.fetchByFacultyId({
+      academyId,
+      facultyId: id,
+    });
+  }
 
   @ResolveProperty()
   specialities(@Parent() { id, academyId }: Faculty): Observable<Speciality[]> {

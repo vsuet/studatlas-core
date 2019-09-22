@@ -1,4 +1,5 @@
 import { Field, ID, Int, ObjectType } from 'type-graphql';
+import { Statistics } from '../../statistics/models/statistics.model';
 
 @ObjectType()
 export class Division {
@@ -19,6 +20,11 @@ export class Division {
 
   @Field({ nullable: true, description: 'Аудитория' })
   room?: string;
+
+  @Field(type => Statistics, {
+    description: 'Статистика по кафедре',
+  })
+  statistics: Statistics;
 
   academyId: string;
 }

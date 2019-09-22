@@ -22,7 +22,8 @@ export class FacultiesService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucFacultets"]', value.data);
-          return dataGrid.extract(FACULTY_SCHEMA);
+          const entities = dataGrid.extract(FACULTY_SCHEMA);
+          return entities.map(entity => Object.assign(entity, { academyId }));
         }),
       );
   }

@@ -33,6 +33,10 @@ export class GroupsService {
     );
   }
 
+  fetchByFacultyId({ academyId, facultyId }) {
+    return this.fetch(academyId, { id: facultyId, f: 'facultet' });
+  }
+
   fetchBySpecialityId({ academyId, specialityId }) {
     return this.fetch(academyId, { id: specialityId, f: 'spets' });
   }

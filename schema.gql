@@ -31,6 +31,8 @@ type Faculty {
   head: String
   phone: String
   room: String
+  groups: [Group!]
+  academyId: String!
 }
 
 type Group {

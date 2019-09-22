@@ -12,6 +12,7 @@ import { FetchDivisionArgs } from './dto/fetch-division.args';
 import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
 import { StatisticsService } from '../statistics/statistics.service';
 import { Statistics } from '../statistics/models/statistics.model';
+import { StatisticsFilterArgs } from '../statistics/dto/statistics-filter.args';
 
 @Resolver(of => Division)
 export class DivisionsResolver {
@@ -21,10 +22,14 @@ export class DivisionsResolver {
   ) {}
 
   @ResolveProperty()
-  statistics(@Parent() { id, academyId }: Division): Observable<Statistics> {
+  statistics(
+    @Args() statisticsFilterArgs: StatisticsFilterArgs,
+    @Parent() { id, academyId }: Division,
+  ): Observable<Statistics> {
     return this.statisticsService.fetchByDivisionId({
       academyId,
       divisionId: id,
+      ...statisticsFilterArgs,
     });
   }
 

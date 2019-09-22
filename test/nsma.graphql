@@ -20,3 +20,31 @@ query xxx {
     }
   }
 }
+
+query xxx {
+  faculty(academyId: "nsma", facultyId: 28) {
+    id
+    name
+    statistics {
+      all
+      noCheckpoints
+      noRatings
+      notClosed
+      blank
+    }
+  }
+}
+
+query xxx {
+  division(academyId: "nsma", divisionId: 2) {
+    id
+    name
+    statistics(year: "2018-2019", semester: 0) {
+      all
+      noCheckpoints
+      noRatings
+      notClosed
+      blank
+    }
+  }
+}

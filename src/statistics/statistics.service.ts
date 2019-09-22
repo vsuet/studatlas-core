@@ -23,13 +23,11 @@ export class StatisticsService {
       );
   }
 
-  fetchByDivisionId({ academyId, divisionId }) {
+  fetchByDivisionId({ academyId, divisionId, year, semester }) {
     return this.fetch(academyId, {
       mode: 'statkaf',
-      id: divisionId,
-      f: 'kaf',
-      // year: '2018-2019',
-      // sem: 0,
+      year,
+      sem: semester,
     }).pipe(
       map(statistics => {
         return statistics.find(item => item.divisionId === Number(divisionId));
@@ -37,13 +35,11 @@ export class StatisticsService {
     );
   }
 
-  fetchByFacultyId({ academyId, facultyId }) {
+  fetchByFacultyId({ academyId, facultyId, year, semester }) {
     return this.fetch(academyId, {
       mode: 'statfac',
-      id: facultyId,
-      f: 'kaf',
-      // year: '2018-2019',
-      // sem: 0,
+      year,
+      sem: semester,
     }).pipe(
       map(statistics => {
         return statistics.find(item => item.facultyId === facultyId);

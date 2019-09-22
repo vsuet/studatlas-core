@@ -16,6 +16,7 @@ import { SpecialitiesService } from '../specialities/specialities.service';
 import { Speciality } from '../specialities/models/speciality.model';
 import { Statistics } from '../statistics/models/statistics.model';
 import { StatisticsService } from '../statistics/statistics.service';
+import { StatisticsFilterArgs } from '../statistics/dto/statistics-filter.args';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver {
@@ -27,10 +28,14 @@ export class FacultiesResolver {
   ) {}
 
   @ResolveProperty()
-  statistics(@Parent() { id, academyId }: Faculty): Observable<Statistics> {
+  statistics(
+    @Args() statisticsFilterArgs: StatisticsFilterArgs,
+    @Parent() { id, academyId }: Faculty,
+  ): Observable<Statistics> {
     return this.statisticsService.fetchByFacultyId({
       academyId,
       facultyId: id,
+      ...statisticsFilterArgs,
     });
   }
 

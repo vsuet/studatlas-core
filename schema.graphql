@@ -41,7 +41,11 @@ type Division {
   room: String
 
   """Статистика по кафедре"""
-  statistics: Statistics!
+  statistics(
+    """Учебный год"""
+    year: String
+    semester: Int
+  ): Statistics!
 }
 
 type Faculty {
@@ -69,7 +73,11 @@ type Faculty {
   specialities: [Speciality!]
 
   """Статистика по факультету"""
-  statistics: Statistics!
+  statistics(
+    """Учебный год"""
+    year: String
+    semester: Int
+  ): Statistics!
 }
 
 type Group {

@@ -12,15 +12,24 @@ import { Observable } from 'rxjs';
 import { FetchFacultyArgs } from './dto/fetch-faculty.args';
 import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
-import { forwardRef, Inject } from '@nestjs/common';
+import { SpecialitiesService } from '../specialities/specialities.service';
+import { Speciality } from '../specialities/models/speciality.model';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver {
   constructor(
     private readonly facultiesService: FacultiesService,
-    @Inject(forwardRef(() => GroupsService))
     private readonly groupsService: GroupsService,
+    private readonly specialitiesService: SpecialitiesService,
   ) {}
+
+  @ResolveProperty()
+  specialities(@Parent() { id, academyId }: Faculty): Observable<Speciality[]> {
+    return this.specialitiesService.fetchByFacultyId({
+      academyId,
+      facultyId: id,
+    });
+  }
 
   @ResolveProperty()
   groups(@Parent() { id, academyId }: Faculty): Observable<Group[]> {

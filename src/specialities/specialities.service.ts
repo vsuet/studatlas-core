@@ -34,6 +34,10 @@ export class SpecialitiesService {
     );
   }
 
+  fetchByFacultyId({ academyId, facultyId }) {
+    return this.fetch(academyId, { f: 'facultet', id: facultyId });
+  }
+
   fetchAll({ academyId }: FetchSpecialitiesArgs) {
     return this.fetch(academyId);
   }

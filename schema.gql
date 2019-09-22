@@ -32,6 +32,7 @@ type Faculty {
   phone: String
   room: String
   groups: [Group!]
+  specialities: [Speciality!]
 }
 
 type Group {

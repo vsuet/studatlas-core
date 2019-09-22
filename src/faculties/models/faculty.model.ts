@@ -28,5 +28,5 @@ export class Faculty {
   @Field(type => [Speciality], { nullable: true })
   specialities?: Speciality[];
 
-  academyId?: string;
+  academyId: string;
 }

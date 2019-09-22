@@ -30,7 +30,7 @@ export class Group {
   @Field(type => Speciality)
   speciality: Speciality;
 
-  academyId?: string;
+  academyId: string;
 
   specialityId?: number;
 }

@@ -20,5 +20,5 @@ export class Division {
   @Field({ nullable: true })
   room?: string;
 
-  academyId?: string;
+  academyId: string;
 }

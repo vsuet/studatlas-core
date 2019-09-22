@@ -101,4 +101,5 @@ type Speciality {
   qualification: String
   groups: [Group!]
   division: Division
+  faculty: Faculty!
 }

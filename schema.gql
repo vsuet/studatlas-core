@@ -32,7 +32,6 @@ type Faculty {
   phone: String
   room: String
   groups: [Group!]
-  academyId: String!
 }
 
 type Group {
@@ -44,6 +43,7 @@ type Group {
   countTargeted: Int!
   countSpecial: Int!
   curricula: String
+  speciality: Speciality!
 }
 
 type Query {
@@ -99,5 +99,4 @@ type Speciality {
   code: String!
   qualification: String
   groups: [Group!]
-  academyId: String!
 }

@@ -24,6 +24,5 @@ export class Faculty {
   @Field(type => [Group], { nullable: true })
   groups?: Group[];
 
-  @Field()
   academyId?: string;
 }

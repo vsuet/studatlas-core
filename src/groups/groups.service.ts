@@ -22,13 +22,14 @@ export class GroupsService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucGroups"]', value.data);
-          return dataGrid.extract(GROUP_SCHEMA);
+          const entities = dataGrid.extract(GROUP_SCHEMA);
+          return entities.map(entity => Object.assign(entity, { academyId }));
         }),
       );
   }
 
   fetchById({ academyId, groupId }: FetchGroupArgs) {
-    return this.fetch(academyId, { id: groupId }).pipe(
+    return this.fetch(academyId, { id: groupId, f: 'group' }).pipe(
       map(groups => groups[0]),
     );
   }

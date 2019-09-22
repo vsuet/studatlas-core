@@ -12,11 +12,13 @@ import { Observable } from 'rxjs';
 import { FetchFacultyArgs } from './dto/fetch-faculty.args';
 import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
+import { forwardRef, Inject } from '@nestjs/common';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver {
   constructor(
     private readonly facultiesService: FacultiesService,
+    @Inject(forwardRef(() => GroupsService))
     private readonly groupsService: GroupsService,
   ) {}
 

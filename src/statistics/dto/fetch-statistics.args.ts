@@ -1,7 +1,13 @@
 import { ArgsType, Field, Int, ID } from 'type-graphql';
 
 @ArgsType()
-export class StatisticsFilterArgs {
+export class FetchStatisticsArgs {
+  @Field(type => ID)
+  academyId: string;
+
+  @Field()
+  mode: 'divisions' | 'faculties';
+
   @Field({ description: 'Учебный год', nullable: true })
   year: string;
 

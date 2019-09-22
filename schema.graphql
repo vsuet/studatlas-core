@@ -20,6 +20,9 @@ type Book {
 
   """Название зачетной книжки"""
   code: String!
+
+  """Группа, в которой учится студент"""
+  group: Group!
 }
 
 type Division {
@@ -155,6 +158,21 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Division!]!
+  statistics(
+    academyId: ID!
+    mode: String!
+
+    """Учебный год"""
+    year: String
+    semester: Int
+  ): [Statistics!]!
+  book(
+    """ID зачетки"""
+    bookId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Book!
 }
 
 type Speciality {

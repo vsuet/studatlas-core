@@ -26,6 +26,12 @@ export class BooksService {
       );
   }
 
+  fetchById({ academyId, bookId }) {
+    return this.fetch(academyId, { id: bookId, f: 'stud' }).pipe(
+      map(books => books[0]),
+    );
+  }
+
   fetchByGroupId({ academyId, groupId }) {
     return this.fetch(academyId, { id: groupId, f: 'group' });
   }

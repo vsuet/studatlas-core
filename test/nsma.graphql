@@ -48,3 +48,15 @@ query xxx {
     }
   }
 }
+
+query xxx {
+  book(academyId: "nsma", bookId: 45422) {
+    id
+    code
+    group {
+      id
+      name
+      year
+    }
+  }
+}

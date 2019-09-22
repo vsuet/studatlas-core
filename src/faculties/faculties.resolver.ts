@@ -29,13 +29,14 @@ export class FacultiesResolver {
 
   @ResolveProperty()
   statistics(
-    @Args() statisticsFilterArgs: StatisticsFilterArgs,
+    @Args() { year, semester }: StatisticsFilterArgs,
     @Parent() { id, academyId }: Faculty,
   ): Observable<Statistics> {
     return this.statisticsService.fetchByFacultyId({
       academyId,
       facultyId: id,
-      ...statisticsFilterArgs,
+      year,
+      semester,
     });
   }
 

@@ -5,12 +5,17 @@ export const BOOK_SCHEMA: Schema = {
     {
       name: 'id',
       type: 'id',
-      columns: ['Номер Зачетной Книжки'], // институт для СПбГЛТУ и КГУ
+      columns: ['Номер Зачетной Книжки'],
     },
     {
       name: 'code',
       type: 'text',
-      columns: ['Номер Зачетной Книжки'], // институт для СПбГЛТУ и КГУ
+      columns: ['Номер Зачетной Книжки'],
+    },
+    {
+      name: 'groupId',
+      type: 'id',
+      columns: ['Группа'],
     },
   ],
 };

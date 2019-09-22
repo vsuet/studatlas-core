@@ -23,12 +23,25 @@ export class StatisticsService {
       );
   }
 
-  fetchByDivisionId({ academyId, divisionId, year, semester }) {
+  fetchAll({ academyId, year, semester, mode }) {
+    let statMode;
+    switch (mode) {
+      case 'faculties':
+        statMode = 'statfac';
+        break;
+      case 'divisions':
+        statMode = 'statkaf';
+        break;
+    }
     return this.fetch(academyId, {
-      mode: 'statkaf',
+      mode: statMode,
       year,
       sem: semester,
-    }).pipe(
+    });
+  }
+
+  fetchByDivisionId({ academyId, divisionId, year, semester }) {
+    return this.fetchAll({ academyId, mode: 'divisions', year, semester }).pipe(
       map(statistics => {
         return statistics.find(item => item.divisionId === Number(divisionId));
       }),
@@ -36,11 +49,7 @@ export class StatisticsService {
   }
 
   fetchByFacultyId({ academyId, facultyId, year, semester }) {
-    return this.fetch(academyId, {
-      mode: 'statfac',
-      year,
-      sem: semester,
-    }).pipe(
+    return this.fetchAll({ academyId, mode: 'faculties', year, semester }).pipe(
       map(statistics => {
         return statistics.find(item => item.facultyId === facultyId);
       }),

@@ -8,8 +8,18 @@ export const STATISTICS_SCHEMA: Schema = {
       columns: ['Номер'],
     },
     {
+      name: 'division',
+      type: 'text',
+      columns: ['Название Кафедры'],
+    },
+    {
       name: 'facultyId',
       type: 'id',
+      columns: ['Факультет'],
+    },
+    {
+      name: 'faculty',
+      type: 'text',
       columns: ['Факультет'],
     },
     {

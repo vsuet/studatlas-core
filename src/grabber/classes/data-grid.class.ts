@@ -43,37 +43,39 @@ export class DataGrid {
         });
     });
 
-    return this.rows.map((i, row) => {
-      const entity = {};
-      const cells = this.$(row)
-        .find('td')
-        .toArray();
+    return this.rows
+      .map((i, row) => {
+        const entity = {};
+        const cells = this.$(row)
+          .find('td')
+          .toArray();
 
-      schema.attributes.map(({ name, type }) => {
-        let value;
-        const elem = this.$(cells[positions[name]]);
+        schema.attributes.map(({ name, type }) => {
+          let value;
+          const elem = this.$(cells[positions[name]]);
 
-        switch (type) {
-          case 'id': {
-            const stringified = elem.find('a').attr('href');
-            const parsed = queryString.parse(stringified);
-            value = parsed.id;
-            break;
+          switch (type) {
+            case 'id': {
+              const stringified = elem.find('a').attr('href');
+              const parsed = queryString.parse(stringified);
+              value = parsed.id;
+              break;
+            }
+            case 'numeric': {
+              const numVal = elem.text().trim();
+              value = !!numVal.length ? Number(numVal) : null;
+              break;
+            }
+            case 'text':
+            default: {
+              const text = elem.text().trim();
+              value = !!text.length ? text : null;
+            }
           }
-          case 'numeric': {
-            const numVal = elem.text().trim();
-            value = !!numVal.length ? Number(numVal) : null;
-            break;
-          }
-          case 'text':
-          default: {
-            const text = elem.text().trim();
-            value = !!text.length ? text : null;
-          }
-        }
-        entity[name] = value;
-      });
-      return entity;
-    });
+          entity[name] = value;
+        });
+        return entity;
+      })
+      .toArray();
   }
 }

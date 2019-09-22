@@ -25,7 +25,7 @@ export class Academy {
   faculties?: Faculty[];
 
   @Field(type => [Group], { nullable: true })
-  groups?: Faculty[];
+  groups?: Group[];
 
   @Field(type => [Division], { nullable: true })
   divisions?: Division[];

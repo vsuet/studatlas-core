@@ -96,4 +96,6 @@ type Speciality {
   name: String!
   code: String!
   qualification: String
+  groups: [Group!]
+  academyId: String!
 }

@@ -22,13 +22,14 @@ export class SpecialitiesService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucSpets"]', value.data);
-          return dataGrid.extract(SPECIALITY_SCHEMA);
+          const entities = dataGrid.extract(SPECIALITY_SCHEMA);
+          return entities.map(entity => Object.assign(entity, { academyId }));
         }),
       );
   }
 
   fetchById({ academyId, specialityId }: FetchSpecialityArgs) {
-    return this.fetch(academyId, { id: specialityId }).pipe(
+    return this.fetch(academyId, { id: specialityId, f: 'spets' }).pipe(
       map(specialities => specialities[0]),
     );
   }

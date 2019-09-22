@@ -27,7 +27,6 @@ export class GrabberModule implements OnModuleInit {
 
   public onModuleInit() {
     this.httpService.axiosRef.interceptors.request.use(req => {
-      console.log(req)
       return req;
     });
 

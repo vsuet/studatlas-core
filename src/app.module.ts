@@ -8,7 +8,7 @@ import { AcademiesModule } from './academies/academies.module';
   imports: [
     AcademiesModule,
     GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
+      autoSchemaFile: 'schema.graphql',
       debug: true,
     }),
   ],

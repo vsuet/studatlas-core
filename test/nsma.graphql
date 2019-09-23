@@ -76,3 +76,36 @@ query xxx {
     }
   }
 }
+
+query xxx {
+  document(academyId: "nsma", documentId: 138149) {
+    id
+    unit
+    year
+    yearNumber
+    teacher
+    semester
+    hours
+    subject
+    type
+    savesCount
+    curricula
+    status
+    updatedAt
+    device
+    group {
+      id
+      name
+    }
+    division {
+      id
+      name
+    }
+    members {
+      bookId
+      bookCode
+      date
+      mark
+    }
+  }
+}

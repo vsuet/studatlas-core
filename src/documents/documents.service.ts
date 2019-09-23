@@ -15,7 +15,8 @@ export class DocumentsService {
       })
       .pipe(
         map(value => {
-          return new DocumentDetails(value.data).extractAll();
+          const document = new DocumentDetails(value.data).extractAll();
+          return { ...document, academyId };
         }),
       );
   }

@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType, Int } from 'type-graphql';
 import { DocumentMember } from './document-member.model';
+import { Division } from '../../divisions/models/division.model';
+import { Group } from '../../groups/models/group.model';
 
 @ObjectType()
 export class Document {
@@ -44,6 +46,26 @@ export class Document {
 
   @Field({ description: 'Компьютер' })
   device: string;
+
+  // кафедру могут удалить поэтому может быть null
+  @Field(type => Division, { nullable: true })
+  division: Division;
+
+  @Field(type => Int, { description: 'Кафедра' })
+  divisionId: number;
+
+  @Field({ description: 'Кафедра' })
+  divisionName: string;
+
+  // группу могут удалить поэтому может быть null
+  @Field(type => Group, { nullable: true })
+  group: Group;
+
+  @Field(type => Int, { description: 'Группа' })
+  groupId: number;
+
+  @Field({ description: 'Группа' })
+  groupName: string;
 
   @Field(type => [DocumentMember], { nullable: true })
   members?: DocumentMember[];

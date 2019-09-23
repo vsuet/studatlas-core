@@ -98,6 +98,20 @@ type Document {
 
   """Компьютер"""
   device: String!
+  division: Division
+
+  """Кафедра"""
+  divisionId: Int!
+
+  """Кафедра"""
+  divisionName: String!
+  group: Group
+
+  """Группа"""
+  groupId: Int!
+
+  """Группа"""
+  groupName: String!
   members: [DocumentMember!]
 }
 

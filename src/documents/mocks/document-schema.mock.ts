@@ -13,6 +13,11 @@ export const DOCUMENT_HEADER_SCHEMA: Schema = {
       type: 'id',
     },
     {
+      name: 'groupName',
+      columns: ['Группа'],
+      type: 'text',
+    },
+    {
       name: 'unit',
       columns: ['Блок'],
       type: 'text',
@@ -21,6 +26,11 @@ export const DOCUMENT_HEADER_SCHEMA: Schema = {
       name: 'divisionId',
       columns: ['Кафедра'],
       type: 'id',
+    },
+    {
+      name: 'divisionName',
+      columns: ['Кафедра'],
+      type: 'text',
     },
     {
       name: 'year',

@@ -116,6 +116,7 @@ type Document {
 }
 
 type DocumentMember {
+  book: Book
   bookId: ID!
   bookCode: String!
   date: String!

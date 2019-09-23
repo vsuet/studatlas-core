@@ -4,10 +4,12 @@ import { DocumentsResolver } from './documents.resolver';
 import { GrabberModule } from '../grabber/grabber.module';
 import { DivisionsModule } from '../divisions/divisions.module';
 import { GroupsModule } from '../groups/groups.module';
+import { DocumentMembersResolver } from './document-members.resolver';
+import { BooksModule } from '../books/books.module';
 
 @Module({
-  imports: [GrabberModule, DivisionsModule, GroupsModule],
-  providers: [DocumentsService, DocumentsResolver],
+  imports: [GrabberModule, DivisionsModule, GroupsModule, BooksModule],
+  providers: [DocumentsService, DocumentsResolver, DocumentMembersResolver],
   exports: [DocumentsService],
 })
 export class DocumentsModule {}

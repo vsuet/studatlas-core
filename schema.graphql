@@ -59,9 +59,45 @@ type Division {
 
 type Document {
   id: ID
+
+  """Блок"""
   unit: String!
+
+  """Год контроля"""
   year: String!
+
+  """Курс"""
   yearNumber: Int!
+
+  """Преподаватель"""
+  teacher: String!
+
+  """Семестр"""
+  semester: Int!
+
+  """Часов"""
+  hours: Int!
+
+  """Дисциплина"""
+  subject: String!
+
+  """Тип ведомости"""
+  type: String!
+
+  """Кол-во сохранений"""
+  savesCount: Float!
+
+  """Учебный план"""
+  curricula: String!
+
+  """Статус"""
+  status: String!
+
+  """Дата изменения"""
+  updatedAt: String!
+
+  """Компьютер"""
+  device: String!
   members: [DocumentMember!]
 }
 

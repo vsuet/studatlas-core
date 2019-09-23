@@ -62,6 +62,14 @@ type Document {
   unit: String!
   year: String!
   yearNumber: Int!
+  members: [DocumentMember!]
+}
+
+type DocumentMember {
+  bookId: ID!
+  bookCode: String!
+  date: String!
+  mark: String!
 }
 
 type Entry {

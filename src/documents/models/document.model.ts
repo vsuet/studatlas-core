@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType, Int } from 'type-graphql';
+import { DocumentMember } from './document-member.model';
 
 @ObjectType()
 export class Document {
@@ -13,6 +14,9 @@ export class Document {
 
   @Field(type => Int)
   yearNumber: string;
+
+  @Field(type => [DocumentMember], { nullable: true })
+  members?: DocumentMember[];
 
   academyId: string;
 }

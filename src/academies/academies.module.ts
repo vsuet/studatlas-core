@@ -8,9 +8,11 @@ import { DivisionsModule } from '../divisions/divisions.module';
 import { BooksModule } from '../books/books.module';
 import { StatisticsModule } from '../statistics/statistics.module';
 import { DocumentsModule } from '../documents/documents.module';
+import { CurriculaModule } from '../curricula/curricula.module';
 
 @Module({
   imports: [
+    CurriculaModule,
     BooksModule,
     DivisionsModule,
     DocumentsModule,

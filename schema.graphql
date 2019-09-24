@@ -112,7 +112,11 @@ type Document {
 
   """Группа"""
   groupName: String!
-  members: [DocumentMember!]
+  members(
+    """ID зачетки"""
+    bookId: ID
+  ): [DocumentMember!]
+  saveStories: [SaveStory!]
 }
 
 type DocumentMember {
@@ -275,6 +279,23 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): Document!
+}
+
+type SaveStory {
+  """Дата сохранения"""
+  date: String!
+
+  """Пользователь"""
+  login: String!
+
+  """ФИО сотрудника"""
+  username: String!
+
+  """Должность сотрудника"""
+  post: String!
+
+  """Компьютер"""
+  device: String!
 }
 
 type Speciality {

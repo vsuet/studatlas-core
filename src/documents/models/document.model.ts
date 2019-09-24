@@ -2,6 +2,7 @@ import { Field, ID, ObjectType, Int } from 'type-graphql';
 import { DocumentMember } from './document-member.model';
 import { Division } from '../../divisions/models/division.model';
 import { Group } from '../../groups/models/group.model';
+import { SaveStory } from './save-story.model';
 
 @ObjectType()
 export class Document {
@@ -69,6 +70,9 @@ export class Document {
 
   @Field(type => [DocumentMember], { nullable: true })
   members?: DocumentMember[];
+
+  @Field(type => [SaveStory], { nullable: true })
+  saveStories?: SaveStory[];
 
   academyId: string;
 }

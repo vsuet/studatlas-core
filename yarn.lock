@@ -1914,6 +1914,11 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+dotenv@^8.0.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.1.0.tgz#d811e178652bfb8a1e593c6dd704ec7e90d85ea2"
+  integrity sha512-GUE3gqcDCaMltj2++g6bRQ5rBJWtkWTmqmD0fo1RnnMuUqHNCt2oTPeDnS9n6fKYvlhn7AeBkb38lymBtWBQdA==
+
 duplexer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
@@ -3657,6 +3662,11 @@ lodash.get@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
+lodash.set@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -3966,6 +3976,18 @@ neo-async@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+nestjs-config@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/nestjs-config/-/nestjs-config-1.4.4.tgz#d73bb4d034ad76f4b8ced474fb1c7e37751c2c98"
+  integrity sha512-dlcViMWQ9j9BaIPH3AKXQXsxwFkW9LeUIv1Be/qkTRCVNuV9Kn3++m+NFJSkNQmVDdsGxkmc5iDRijuHSXJPUg==
+  dependencies:
+    dotenv "^8.0.0"
+    glob "^7.1.2"
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    reflect-metadata "^0.1.12"
+    rxjs "^6.0.0"
 
 next-tick@1, next-tick@^1.0.0:
   version "1.0.0"
@@ -4731,7 +4753,7 @@ run-parallel@^1.1.9:
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.1.9.tgz#c9dd3a7cf9f4b2c4b6244e173a6ed866e61dd679"
   integrity sha512-DEqnSRTDw/Tc3FXf49zedI638Z9onwUotBMiUFKmrO2sdFKIbXamXGQ3Axd4qgphxKB4kw/qP1w5kTxnfU1B9Q==
 
-rxjs@^6.3.3:
+rxjs@^6.0.0, rxjs@^6.3.3:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.3.tgz#510e26317f4db91a7eb1de77d9dd9ba0a4899a3a"
   integrity sha512-wuYsAYYFdWTAnAaPoKGNhfpWwKZbJW+HgAJ+mImp+Epl7BG8oNWBCTyRM8gba9k4lk8BgWdoYm21Mo/RYhhbgA==

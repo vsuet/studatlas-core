@@ -9,6 +9,7 @@ type Academy {
   abbreviation: String!
   website: String!
   endpoint: String!
+  version: String!
   faculties: [Faculty!]
   groups: [Group!]
   divisions: [Division!]

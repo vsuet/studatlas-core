@@ -1,4 +1,4 @@
-import { Academy } from '../interfaces/academy.interface';
+import { Academy } from '../models/academy.model';
 
 export const ACADEMIES: Academy[] = [
   {
@@ -7,6 +7,7 @@ export const ACADEMIES: Academy[] = [
     abbreviation: 'СибАДИ',
     website: 'https://sibadi.org/',
     endpoint: 'http://umu.sibadi.org',
+    version: 'classic',
   },
   {
     id: 'nsma',
@@ -14,6 +15,7 @@ export const ACADEMIES: Academy[] = [
     abbreviation: 'ГМУ имени адмирала Ф.Ф.Ушакова',
     website: 'http://www.aumsu.ru/',
     endpoint: 'http://nsma.ru:777',
+    version: 'classic',
   },
   {
     id: 'gturp',
@@ -28,6 +30,7 @@ export const ACADEMIES: Academy[] = [
   //   abbreviation: 'ВГУИТ',
   //   website: 'http://vsuet.ru/',
   //   endpoint: 'http://rating.vsuet.ru/web/',
+  //   version: 'classic',
   // },
   {
     id: 'ysaa',

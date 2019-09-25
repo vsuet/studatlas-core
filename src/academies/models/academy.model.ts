@@ -21,6 +21,9 @@ export class Academy {
   @Field()
   endpoint: string;
 
+  @Field()
+  version?: string = 'modern';
+
   @Field(type => [Faculty], { nullable: true })
   faculties?: Faculty[];
 

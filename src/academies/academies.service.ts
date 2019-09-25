@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { ACADEMIES } from './mocks/academies.mock';
-import { Academy } from './interfaces/academy.interface';
+import { Academy } from './models/academy.model';
 
 @Injectable()
 export class AcademiesService {
   private readonly academies = ACADEMIES;
 
   findById(academyId: string) {
-    const academy = ACADEMIES.find((a: Academy) => a.id === academyId);
+    const academy = this.academies.find(a => a.id === academyId);
     return of(academy);
   }
 
   findAll(): Observable<Academy[]> {
-    return of(ACADEMIES);
+    return of(this.academies);
   }
 }

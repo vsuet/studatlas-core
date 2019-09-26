@@ -5,5 +5,8 @@ export const AcademySchema = new mongoose.Schema({
   abbreviation: String,
   website: String,
   endpoint: String,
-  version: String,
+  version: {
+    type: String,
+    default: 'modern',
+  },
 });

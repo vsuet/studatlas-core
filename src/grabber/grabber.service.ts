@@ -10,7 +10,7 @@ export class GrabberService {
 
   createClient(academyId) {
    const client = this.httpService;
-   this.academiesService.findById(academyId).subscribe(academy =>
+   this.academiesService.findById(academyId).then(academy =>
       client.axiosRef.interceptors.request.use(req => {
         // подкладываем url для конкретного вуза
         req.baseURL = academy.endpoint;

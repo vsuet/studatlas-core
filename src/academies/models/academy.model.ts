@@ -10,6 +10,9 @@ export class Academy {
   id: string;
 
   @Field()
+  alias: string;
+
+  @Field()
   name: string;
 
   @Field()

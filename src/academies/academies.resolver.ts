@@ -28,12 +28,12 @@ export class AcademiesResolver {
   ) {}
 
   @Query(returns => Academy, { name: 'academy' })
-  getAcademy(@Args() { academyId }: GetAcademyArgs): Observable<Academy> {
+  getAcademy(@Args() { academyId }: GetAcademyArgs): Promise<Academy> {
     return this.academiesService.findById(academyId);
   }
 
   @Query(returns => [Academy], { name: 'academies' })
-  getAcademies(): Observable<Academy[]> {
+  getAcademies(): Promise<Academy[]> {
     return this.academiesService.findAll();
   }
 

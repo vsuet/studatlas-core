@@ -5,6 +5,7 @@
 
 type Academy {
   id: ID!
+  alias: String!
   name: String!
   abbreviation: String!
   website: String!

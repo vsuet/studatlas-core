@@ -2,11 +2,28 @@ version: 2.1
 
 jobs:
   build:
-    working_directory: ~/core-repo
+    working_directory: ~/repository
     docker:
       - image: circleci/node:12.5.0
+        environment:
+          MONGODB_URI: mongodb://test:password@localhost/studatlas
+      - image: circleci/mongo
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: studatlas
     steps:
       - checkout
+      - run:
+          name: Waiting for MongoDB to be ready
+          command: |
+            for i in `seq 1 30`;
+            do
+              nc -z localhost 27017 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MongoDB && exit 1
       - run:
           name: install-yarn
           command: 'sudo npm install -g yarn@latest'

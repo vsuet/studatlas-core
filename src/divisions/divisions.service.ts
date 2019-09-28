@@ -3,17 +3,18 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { DIVISION_SCHEMA } from './mocks/division-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
-import { FetchDivisionArgs } from './dto/fetch-division.args';
-import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
+import { Academy } from '../academies/models/academy.model';
+import { DIRECTORY_PATH } from '../grabber/path.constants';
 
 @Injectable()
 export class DivisionsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
-      .get('/Dek/Default.aspx', {
+      .createClient()
+      .get(DIRECTORY_PATH, {
+        baseURL: academy.endpoint,
         params: {
           mode: 'kaf',
           ...params,
@@ -22,19 +23,18 @@ export class DivisionsService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucKaf"]', value.data);
-          const entities = dataGrid.extract(DIVISION_SCHEMA);
-          return entities.map(entity => Object.assign(entity, { academyId }));
+          return dataGrid.extract(DIVISION_SCHEMA, academy);
         }),
       );
   }
 
-  fetchById({ academyId, divisionId }: FetchDivisionArgs) {
-    return this.fetch(academyId, { id: divisionId, f: 'kaf' }).pipe(
+  fetchById(id: number, academy: Academy) {
+    return this.fetch(academy, { id, f: 'kaf' }).pipe(
       map(divisions => divisions[0]),
     );
   }
 
-  fetchAll({ academyId }: FetchDivisionsArgs) {
-    return this.fetch(academyId);
+  fetchAll(academy: Academy) {
+    return this.fetch(academy);
   }
 }

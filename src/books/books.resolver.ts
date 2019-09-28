@@ -1,15 +1,8 @@
-import {
-  Args,
-  Parent,
-  Query,
-  ResolveProperty,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
 import { Book } from './models/book.model';
 import { Observable } from 'rxjs';
 import { BooksService } from './books.service';
 import { GroupsService } from '../groups/groups.service';
-import { FetchBookArgs } from './dto/fetch-book.args';
 import { Group } from '../groups/models/group.model';
 import { EntriesService } from './entries.service';
 import { Entry } from './models/entry.model';
@@ -26,22 +19,15 @@ export class BooksResolver {
   @ResolveProperty()
   entries(
     @Args() { semester }: EntriesFilterArgs,
-    @Parent() { academyId, id }: Book,
+    @Parent() { id, academy }: Book,
   ): Observable<Entry[]> {
-    return this.entriesService.fetchByBookId({
-      academyId,
-      bookId: id,
-      semester,
-    });
+    return this.entriesService.fetchByBookId(id, semester, academy);
   }
 
   @ResolveProperty()
-  group(@Parent() { academyId, groupId }: Book): Observable<Group> {
-    return this.groupsService.fetchById({ academyId, groupId });
-  }
-
-  @Query(returns => Book, { name: 'book' })
-  fetchBook(@Args() { academyId, bookId }: FetchBookArgs): Observable<Book> {
-    return this.booksService.fetchById({ academyId, bookId });
+  group(
+    @Parent() { groupId, academy }: Book,
+  ): Observable<Group> {
+    return this.groupsService.fetchById(groupId, academy);
   }
 }

@@ -1,10 +1,11 @@
-import { Field, ID, Int, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 import { Statistics } from '../../statistics/models/statistics.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Division {
   @Field(type => ID)
-  id: string;
+  id: number;
 
   @Field({ description: 'Название кафедры' })
   name: string;
@@ -26,5 +27,5 @@ export class Division {
   })
   statistics: Statistics;
 
-  academyId: string;
+  academy: Academy;
 }

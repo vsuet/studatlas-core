@@ -5,5 +5,5 @@ import { ArgsType, Field } from 'type-graphql';
 export class GetAcademyArgs {
   @IsString()
   @Field()
-  academyId: string;
+  id: string;
 }

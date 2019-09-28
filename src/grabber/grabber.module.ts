@@ -1,20 +1,12 @@
-import {
-  forwardRef,
-  HttpModule,
-  HttpService,
-  Module,
-  OnModuleInit,
-} from '@nestjs/common';
+import { HttpModule, HttpService, Module, OnModuleInit } from '@nestjs/common';
 import { GrabberService } from './grabber.service';
 import { Buffer } from 'safe-buffer';
 import { Iconv } from 'iconv';
-import { AcademiesModule } from '../academies/academies.module';
 
 const iconv = new Iconv('CP1251', 'UTF-8');
 
 @Module({
   imports: [
-    forwardRef(() => AcademiesModule),
     HttpModule.register({
       responseType: 'arraybuffer',
     }),

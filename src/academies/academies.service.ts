@@ -5,10 +5,12 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class AcademiesService {
-  constructor(@InjectModel('Academy') private readonly academyModel: Model<Academy>) {}
+  constructor(
+    @InjectModel('Academy') private readonly academyModel: Model<Academy>,
+  ) {}
 
-  findById(academyId: string): Promise<Academy> {
-    return  this.academyModel.findById(academyId).exec();
+  findById(id: string): Promise<Academy> {
+    return this.academyModel.findById(id).exec();
   }
 
   findAll(): Promise<Academy[]> {

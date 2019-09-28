@@ -15,6 +15,37 @@ type Academy {
   groups: [Group!]
   divisions: [Division!]
   specialities: [Speciality!]
+  statistics(
+    mode: String!
+
+    """Учебный год"""
+    year: String
+    semester: Int
+  ): [Statistics!]
+  curriculum(
+    """ID учебного плана"""
+    id: ID!
+  ): Curriculum!
+  division(
+    """ID кафедры"""
+    id: ID!
+  ): Division!
+  document(
+    """ID ведомости"""
+    id: ID!
+  ): Document!
+  faculty(
+    """ID факультета"""
+    id: ID!
+  ): Faculty!
+  group(
+    """ID группы"""
+    id: ID!
+  ): Group!
+  speciality(
+    """ID специальности"""
+    id: ID!
+  ): Speciality!
 }
 
 type Book {
@@ -249,78 +280,12 @@ type Practice {
 }
 
 type Query {
-  academy(academyId: String!): Academy!
+  academy(id: String!): Academy!
   academies: [Academy!]!
-  faculty(
-    """ID факультета"""
-    facultyId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Faculty!
-  faculties(academyId: ID!): [Faculty!]!
-  group(
-    """ID группы"""
-    groupId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Group!
-  groups(
-    """ID вуза"""
-    academyId: ID!
-  ): [Group!]!
-  speciality(
-    """ID специальности"""
-    specialityId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Speciality!
-  specialities(
-    """ID вуза"""
-    academyId: ID!
-  ): [Speciality!]!
-  division(
-    """ID кафедры"""
-    divisionId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Division!
-  divisions(
-    """ID вуза"""
-    academyId: ID!
-  ): [Division!]!
-  statistics(
-    academyId: ID!
-    mode: String!
-
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): [Statistics!]!
   book(
     """ID зачетки"""
-    bookId: ID!
-
-    """ID вуза"""
-    academyId: ID!
+    id: ID!
   ): Book!
-  document(
-    """ID ведомости"""
-    documentId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Document!
-  curriculum(
-    """ID учебного плана"""
-    curriculumId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Curriculum!
 }
 
 type SaveStory {

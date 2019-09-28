@@ -1,11 +1,12 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Group } from '../../groups/models/group.model';
 import { Entry } from './entry.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Book {
   @Field(type => ID)
-  id: string;
+  id: number;
 
   @Field({ description: 'Название зачетной книжки' })
   code: string;
@@ -16,6 +17,7 @@ export class Book {
   @Field(type => [Entry], { description: 'Записи из зачетки' })
   entries: Entry[];
 
-  academyId: string;
   groupId: number;
+
+  academy: Academy;
 }

@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Practice } from './practice.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Curriculum {
@@ -17,5 +18,5 @@ export class Curriculum {
   })
   practices: Practice[];
 
-  academyId: string;
+  academy: Academy;
 }

@@ -1,6 +1,7 @@
 import { Field, ID, Int, ObjectType } from 'type-graphql';
 import { Speciality } from '../../specialities/models/speciality.model';
 import { Book } from '../../books/models/book.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Group {
@@ -39,7 +40,7 @@ export class Group {
   })
   books: Book[];
 
-  academyId: string;
-
   specialityId?: number;
+
+  academy: Academy;
 }

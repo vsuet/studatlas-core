@@ -3,11 +3,12 @@ import { DocumentMember } from './document-member.model';
 import { Division } from '../../divisions/models/division.model';
 import { Group } from '../../groups/models/group.model';
 import { SaveStory } from './save-story.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Document {
   @Field(type => ID, { nullable: true })
-  id: string;
+  id: number;
 
   @Field({ description: 'Блок' })
   unit: string;
@@ -74,5 +75,5 @@ export class Document {
   @Field(type => [SaveStory], { nullable: true })
   saveStories?: SaveStory[];
 
-  academyId: string;
+  academy: Academy;
 }

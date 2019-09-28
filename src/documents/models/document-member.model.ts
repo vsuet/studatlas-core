@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Book } from '../../books/models/book.model';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class DocumentMember {
@@ -19,5 +20,5 @@ export class DocumentMember {
   @Field()
   mark: string;
 
-  academyId: string;
+  academy: Academy;
 }

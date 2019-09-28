@@ -3,6 +3,7 @@ import { Faculty } from '../../faculties/models/faculty.model';
 import { Group } from '../../groups/models/group.model';
 import { Division } from '../../divisions/models/division.model';
 import { Speciality } from '../../specialities/models/speciality.model';
+import { Statistics } from '../../statistics/models/statistics.model';
 
 @ObjectType()
 export class Academy {
@@ -25,7 +26,7 @@ export class Academy {
   endpoint: string;
 
   @Field()
-  version?: string = 'modern';
+  version?: string;
 
   @Field(type => [Faculty], { nullable: true })
   faculties?: Faculty[];
@@ -38,4 +39,7 @@ export class Academy {
 
   @Field(type => [Speciality], { nullable: true })
   specialities?: Speciality[];
+
+  @Field(type => [Statistics], { nullable: true })
+  statistics?: Statistics[];
 }

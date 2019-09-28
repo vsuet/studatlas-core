@@ -3,14 +3,15 @@ import { GrabberService } from '../grabber/grabber.service';
 import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { ENTRY_SCHEMA } from './mocks/entry-schema.mock';
+import { Academy } from '../academies/models/academy.model';
 
 @Injectable()
 export class EntriesService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
+      .createClient()
       .get('/Ved/ZachBooks.aspx', {
         params,
       })
@@ -20,13 +21,12 @@ export class EntriesService {
             'table[id*="ContentPage_Grid"]',
             value.data,
           );
-          const entities = dataGrid.extract(ENTRY_SCHEMA);
-          return entities.map(entity => Object.assign(entity, { academyId }));
+          return dataGrid.extract(ENTRY_SCHEMA, academy);
         }),
       );
   }
 
-  fetchByBookId({ academyId, bookId, semester }) {
-    return this.fetch(academyId, { id: bookId, sem: semester });
+  fetchByBookId(id: number, semester: number, academy: Academy) {
+    return this.fetch(academy, { id, sem: semester });
   }
 }

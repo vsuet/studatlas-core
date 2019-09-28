@@ -3,27 +3,28 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { GrabberService } from '../grabber/grabber.service';
 import { STATISTICS_SCHEMA } from './mocks/statistics-schema.mock';
+import { Academy } from '../academies/models/academy.model';
 
 @Injectable()
 export class StatisticsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
+      .createClient()
       .get('/Stat/Default.aspx', {
+        baseURL: academy.endpoint,
         params,
       })
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucStat"]', value.data);
-          const entities = dataGrid.extract(STATISTICS_SCHEMA);
-          return entities.map(entity => Object.assign(entity, { academyId }));
+          return dataGrid.extract(STATISTICS_SCHEMA, academy);
         }),
       );
   }
 
-  fetchAll({ academyId, year, semester, mode }) {
+  fetchAll(year: string, semester: number, mode: string, academy: Academy) {
     let statMode;
     switch (mode) {
       case 'faculties':
@@ -33,25 +34,35 @@ export class StatisticsService {
         statMode = 'statkaf';
         break;
     }
-    return this.fetch(academyId, {
+    return this.fetch(academy, {
       mode: statMode,
       year,
       sem: semester,
     });
   }
 
-  fetchByDivisionId({ academyId, divisionId, year, semester }) {
-    return this.fetchAll({ academyId, mode: 'divisions', year, semester }).pipe(
+  fetchByDivisionId(
+    id: number,
+    year: string,
+    semester: number,
+    academy: Academy,
+  ) {
+    return this.fetchAll(year, semester, 'divisions', academy).pipe(
       map(statistics => {
-        return statistics.find(item => item.divisionId === Number(divisionId));
+        return statistics.find(item => item.divisionId === Number(id));
       }),
     );
   }
 
-  fetchByFacultyId({ academyId, facultyId, year, semester }) {
-    return this.fetchAll({ academyId, mode: 'faculties', year, semester }).pipe(
+  fetchByFacultyId(
+    id: number,
+    year: string,
+    semester: number,
+    academy: Academy,
+  ) {
+    return this.fetchAll(year, semester, 'faculties', academy).pipe(
       map(statistics => {
-        return statistics.find(item => item.facultyId === facultyId);
+        return statistics.find(item => item.facultyId === id);
       }),
     );
   }

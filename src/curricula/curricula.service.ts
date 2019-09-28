@@ -4,14 +4,15 @@ import { map } from 'rxjs/operators';
 import * as cheerio from 'cheerio';
 import * as queryString from 'query-string';
 import { PRACTICE_SCHEMA } from './mocks/practice-schema.mock';
+import { Academy } from '../academies/models/academy.model';
 
 @Injectable()
 export class CurriculaService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
+      .createClient()
       .get('/Plans/Plan.aspx', {
         params,
       })
@@ -88,7 +89,7 @@ export class CurriculaService {
               }
               entity[attribute.name] = practiceValue;
             });
-            return { ...entity, academyId };
+            return entity;
           });
 
           return { id: params.id, name, description, practices };
@@ -96,7 +97,7 @@ export class CurriculaService {
       );
   }
 
-  fetchById({ academyId, curriculumId }) {
-    return this.fetch(academyId, { id: curriculumId });
+  fetchById(id: number, academy: Academy) {
+    return this.fetch(academy, { id });
   }
 }

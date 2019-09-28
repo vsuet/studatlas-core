@@ -8,13 +8,10 @@ import { Division } from '../divisions/models/division.model';
 export class PracticesResolver {
   constructor(private readonly divisionsService: DivisionsService) {}
 
-  @ResolveProperty()
-  division(@Parent() { academyId, divisionId }: Practice): Observable<
-    Division
-  > {
-    return this.divisionsService.fetchById({
-      academyId,
-      divisionId,
-    });
+  @ResolveProperty(returns => Division)
+  division(
+    @Parent() { divisionId, academy }: Practice,
+  ): Observable<Division> {
+    return this.divisionsService.fetchById(divisionId, academy);
   }
 }

@@ -1,7 +1,4 @@
-import { ArgsType, Field, ID } from 'type-graphql';
+import { ArgsType } from 'type-graphql';
 
 @ArgsType()
-export class FetchDivisionsArgs {
-  @Field(type => ID, { description: 'ID вуза' })
-  academyId: string;
-}
+export class FetchDivisionsArgs {}

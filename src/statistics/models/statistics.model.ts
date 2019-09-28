@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from 'type-graphql';
+import { Academy } from '../../academies/models/academy.model';
 
 @ObjectType()
 export class Statistics {
@@ -27,6 +28,7 @@ export class Statistics {
   })
   blank: number;
 
+  academy: Academy;
   divisionId: number;
   facultyId: number;
 }

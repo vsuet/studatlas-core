@@ -4,6 +4,7 @@ import {
   DOCUMENTS_MEMBERS_SCHEMA,
 } from '../mocks/document-schema.mock';
 import * as queryString from 'query-string';
+import { Academy } from '../../academies/models/academy.model';
 
 export class DocumentDetails {
   private readonly $: CheerioStatic;
@@ -128,12 +129,16 @@ export class DocumentDetails {
     return entity;
   }
 
-  extractAll() {
+  extractAll(academy: Academy) {
     const documentDetails = this.extractDetails();
-    const members = this.extractMembers();
+    const members = this.extractMembers().map(member => ({
+      ...member,
+      academy,
+    }));
     return {
       ...documentDetails,
       members,
+      academy,
     };
   }
 }

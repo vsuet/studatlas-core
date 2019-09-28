@@ -1,12 +1,5 @@
-import {
-  Args,
-  Parent,
-  Query,
-  ResolveProperty,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
 import { Observable, of } from 'rxjs';
-import { FetchDocumentArgs } from './dto/fetch-document.args';
 import { Document } from './models/document.model';
 import { DocumentsService } from './documents.service';
 import { Division } from '../divisions/models/division.model';
@@ -29,11 +22,8 @@ export class DocumentsResolver {
   ) {}
 
   @ResolveProperty()
-  saveStories(@Parent() { id, academyId }: Document): Observable<SaveStory> {
-    return this.saveStoriesService.fetchByDocumentId({
-      academyId,
-      documentId: id,
-    });
+  saveStories(@Parent() { id, academy }: Document): Observable<SaveStory> {
+    return this.saveStoriesService.fetchByDocumentId(id, academy);
   }
 
   @ResolveProperty()
@@ -48,21 +38,12 @@ export class DocumentsResolver {
   }
 
   @ResolveProperty()
-  division(@Parent() { divisionId, academyId }: Document): Observable<
-    Division
-  > {
-    return this.divisionsService.fetchById({ academyId, divisionId });
+  division(@Parent() { divisionId, academy }: Document): Observable<Division> {
+    return this.divisionsService.fetchById(divisionId, academy);
   }
 
   @ResolveProperty()
-  group(@Parent() { groupId, academyId }: Document): Observable<Group> {
-    return this.groupsService.fetchById({ academyId, groupId });
-  }
-
-  @Query(returns => Document, { name: 'document' })
-  fetchDocument(@Args() { academyId, documentId }: FetchDocumentArgs):
-    | Observable<Document>
-    | any {
-    return this.documentsService.fetchById({ academyId, documentId });
+  group(@Parent() { groupId, academy }: Document): Observable<Group> {
+    return this.groupsService.fetchById(groupId, academy);
   }
 }

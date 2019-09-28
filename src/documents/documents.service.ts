@@ -2,30 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { GrabberService } from '../grabber/grabber.service';
 import { map } from 'rxjs/operators';
 import { DocumentDetails } from './classes/document-details.class';
+import { Academy } from '../academies/models/academy.model';
 
 @Injectable()
 export class DocumentsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
+      .createClient()
       .get('/Ved/Ved.aspx', {
+        baseURL: academy.endpoint,
         params,
       })
       .pipe(
         map(value => {
-          const document = new DocumentDetails(value.data).extractAll();
-          document.members = document.members.map(member => ({
-            ...member,
-            academyId,
-          }));
-          return { ...document, academyId };
+          return new DocumentDetails(value.data).extractAll(academy);
         }),
       );
   }
 
-  fetchById({ academyId, documentId }) {
-    return this.fetch(academyId, { id: documentId });
+  fetchById(id: number, academy: Academy) {
+    return this.fetch(academy, { id });
   }
 }

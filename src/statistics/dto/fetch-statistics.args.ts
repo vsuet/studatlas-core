@@ -1,10 +1,7 @@
-import { ArgsType, Field, Int, ID } from 'type-graphql';
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
 export class FetchStatisticsArgs {
-  @Field(type => ID)
-  academyId: string;
-
   @Field()
   mode: 'divisions' | 'faculties';
 

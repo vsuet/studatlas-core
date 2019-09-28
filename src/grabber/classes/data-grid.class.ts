@@ -1,6 +1,7 @@
 import * as queryString from 'query-string';
 import { Schema } from '../interfaces/schema.interface';
 import * as cheerio from 'cheerio';
+import { Academy } from '../../academies/models/academy.model';
 
 export class DataGrid {
   private readonly $: CheerioStatic;
@@ -22,7 +23,7 @@ export class DataGrid {
     this.rows = this.$(this.root).find(DataGrid.selectors.rows.join(', '));
   }
 
-  public extract(schema: Schema): any {
+  public extract(schema: Schema, academy: Academy): any {
     const positions = {};
     schema.attributes.map(attribute => {
       positions[attribute.name] = this.headers
@@ -76,6 +77,7 @@ export class DataGrid {
         });
         return entity;
       })
-      .toArray();
+      .toArray()
+      .map(entity => ({ ...entity, academy }));
   }
 }

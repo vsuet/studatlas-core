@@ -15,8 +15,8 @@ import { AcademySchema } from './schemas/academy.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Academy', schema: AcademySchema, collection: 'academies' }]),
-    CurriculaModule,
     BooksModule,
+    CurriculaModule,
     DivisionsModule,
     DocumentsModule,
     FacultiesModule,

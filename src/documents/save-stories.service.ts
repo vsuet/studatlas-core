@@ -3,14 +3,15 @@ import { GrabberService } from '../grabber/grabber.service';
 import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { SAVE_STORY_SCHEMA } from './mocks/save-story-schema.mock';
+import { Academy } from '../academies/models/academy.model';
 
 @Injectable()
 export class SaveStoriesService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
+      .createClient()
       .get('/Ved/StorySave.aspx', {
         params,
       })
@@ -20,13 +21,12 @@ export class SaveStoriesService {
             'table[id*="ContentPage_Grid"]',
             value.data,
           );
-          const entities = dataGrid.extract(SAVE_STORY_SCHEMA);
-          return entities.map(entity => ({ ...entity, academyId }));
+          return dataGrid.extract(SAVE_STORY_SCHEMA, academy);
         }),
       );
   }
 
-  fetchByDocumentId({ academyId, documentId }) {
-    return this.fetch(academyId, { id: documentId });
+  fetchByDocumentId(id: number, academy: Academy) {
+    return this.fetch(academy, { id });
   }
 }

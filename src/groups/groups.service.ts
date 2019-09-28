@@ -3,17 +3,18 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { GROUP_SCHEMA } from './mocks/group-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
-import { FetchGroupArgs } from './dto/fetch-group.args';
-import { FetchGroupsArgs } from './dto/fetch-groups.args';
+import { Academy } from '../academies/models/academy.model';
+import { DIRECTORY_PATH } from '../grabber/path.constants';
 
 @Injectable()
 export class GroupsService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
-      .get('/Dek/Default.aspx', {
+      .createClient()
+      .get(DIRECTORY_PATH, {
+        baseURL: academy.endpoint,
         params: {
           mode: 'group',
           ...params,
@@ -22,27 +23,26 @@ export class GroupsService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucGroups"]', value.data);
-          const entities = dataGrid.extract(GROUP_SCHEMA);
-          return entities.map(entity => Object.assign(entity, { academyId }));
+          return dataGrid.extract(GROUP_SCHEMA, academy);
         }),
       );
   }
 
-  fetchById({ academyId, groupId }: FetchGroupArgs) {
-    return this.fetch(academyId, { id: groupId, f: 'group' }).pipe(
+  fetchById(id: number, academy: Academy) {
+    return this.fetch(academy, { id, f: 'group' }).pipe(
       map(groups => groups[0]),
     );
   }
 
-  fetchByFacultyId({ academyId, facultyId }) {
-    return this.fetch(academyId, { id: facultyId, f: 'facultet' });
+  fetchByFacultyId(id: number, academy: Academy) {
+    return this.fetch(academy, { id, f: 'facultet' });
   }
 
-  fetchBySpecialityId({ academyId, specialityId }) {
-    return this.fetch(academyId, { id: specialityId, f: 'spets' });
+  fetchBySpecialityId(id: number, academy: Academy) {
+    return this.fetch(academy, { id, f: 'spets' });
   }
 
-  fetchAll({ academyId }: FetchGroupsArgs) {
-    return this.fetch(academyId);
+  fetchAll(academy: Academy) {
+    return this.fetch(academy);
   }
 }

@@ -16,6 +16,4 @@ export class SaveStory {
 
   @Field({ description: 'Компьютер' })
   device: string;
-
-  academyId: string;
 }

@@ -1,15 +1,7 @@
-import {
-  Args,
-  Parent,
-  Query,
-  ResolveProperty,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
 import { FacultiesService } from './faculties.service';
 import { Faculty } from './models/faculty.model';
-import { FetchFacultiesArgs } from './dto/fetch-faculties.args';
 import { Observable } from 'rxjs';
-import { FetchFacultyArgs } from './dto/fetch-faculty.args';
 import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
 import { SpecialitiesService } from '../specialities/specialities.service';
@@ -17,6 +9,9 @@ import { Speciality } from '../specialities/models/speciality.model';
 import { Statistics } from '../statistics/models/statistics.model';
 import { StatisticsService } from '../statistics/statistics.service';
 import { StatisticsFilterArgs } from '../statistics/dto/statistics-filter.args';
+
+import { UseInterceptors } from '@nestjs/common';
+import { AcademyInterceptor } from '../academies/interceptors/academy.interceptor';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver {
@@ -30,43 +25,19 @@ export class FacultiesResolver {
   @ResolveProperty()
   statistics(
     @Args() { year, semester }: StatisticsFilterArgs,
-    @Parent() { id, academyId }: Faculty,
+    @Parent() { id, academy }: Faculty,
   ): Observable<Statistics> {
-    return this.statisticsService.fetchByFacultyId({
-      academyId,
-      facultyId: id,
-      year,
-      semester,
-    });
+    return this.statisticsService.fetchByFacultyId(id, year, semester, academy);
   }
 
   @ResolveProperty()
-  specialities(@Parent() { id, academyId }: Faculty): Observable<Speciality[]> {
-    return this.specialitiesService.fetchByFacultyId({
-      academyId,
-      facultyId: id,
-    });
+  specialities(@Parent() { id, academy }: Faculty): Observable<Speciality[]> {
+    return this.specialitiesService.fetchByFacultyId(id, academy);
   }
 
   @ResolveProperty()
-  groups(@Parent() { id, academyId }: Faculty): Observable<Group[]> {
-    return this.groupsService.fetchByFacultyId({
-      academyId,
-      facultyId: id,
-    });
-  }
-
-  @Query(returns => Faculty, { name: 'faculty' })
-  fetchFaculty(
-    @Args() fetchFacultyArgs: FetchFacultyArgs,
-  ): Observable<Faculty> {
-    return this.facultiesService.fetchById(fetchFacultyArgs);
-  }
-
-  @Query(returns => [Faculty], { name: 'faculties' })
-  fetchFaculties(
-    @Args() fetchFacultiesArgs: FetchFacultiesArgs,
-  ): Observable<Faculty[]> {
-    return this.facultiesService.fetchAll(fetchFacultiesArgs);
+  @UseInterceptors(AcademyInterceptor)
+  groups(@Parent() { id, academy }: Faculty): Observable<Group[]> {
+    return this.groupsService.fetchByFacultyId(id, academy);
   }
 }

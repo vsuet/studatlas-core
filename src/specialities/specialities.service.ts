@@ -3,17 +3,18 @@ import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { SPECIALITY_SCHEMA } from './mocks/speciality-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
-import { FetchSpecialityArgs } from './dto/fetch-speciality.args';
-import { FetchSpecialitiesArgs } from './dto/fetch-specialities.args';
+import { Academy } from '../academies/models/academy.model';
+import { DIRECTORY_PATH } from '../grabber/path.constants';
 
 @Injectable()
 export class SpecialitiesService {
   constructor(private readonly grabberService: GrabberService) {}
 
-  fetch(academyId: string, params?: any) {
+  fetch(academy: Academy, params?: any) {
     return this.grabberService
-      .createClient(academyId)
-      .get('/Dek/Default.aspx', {
+      .createClient()
+      .get(DIRECTORY_PATH, {
+        baseURL: academy.endpoint,
         params: {
           mode: 'spets',
           ...params,
@@ -22,23 +23,22 @@ export class SpecialitiesService {
       .pipe(
         map(value => {
           const dataGrid = new DataGrid('table[id*="ucSpets"]', value.data);
-          const entities = dataGrid.extract(SPECIALITY_SCHEMA);
-          return entities.map(entity => Object.assign(entity, { academyId }));
+          return dataGrid.extract(SPECIALITY_SCHEMA, academy);
         }),
       );
   }
 
-  fetchById({ academyId, specialityId }: FetchSpecialityArgs) {
-    return this.fetch(academyId, { id: specialityId, f: 'spets' }).pipe(
+  fetchById(id: number, academy: Academy) {
+    return this.fetch(academy, { id, f: 'spets' }).pipe(
       map(specialities => specialities[0]),
     );
   }
 
-  fetchByFacultyId({ academyId, facultyId }) {
-    return this.fetch(academyId, { f: 'facultet', id: facultyId });
+  fetchByFacultyId(facultyId: number, academy: Academy) {
+    return this.fetch(academy, { f: 'facultet', id: facultyId });
   }
 
-  fetchAll({ academyId }: FetchSpecialitiesArgs) {
-    return this.fetch(academyId);
+  fetchAll(academy: Academy) {
+    return this.fetch(academy);
   }
 }

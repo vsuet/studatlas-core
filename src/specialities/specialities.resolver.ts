@@ -1,15 +1,6 @@
-import {
-  Args,
-  Parent,
-  Query,
-  ResolveProperty,
-  Resolver,
-} from '@nestjs/graphql';
+import { Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
-import { SpecialitiesService } from './specialities.service';
 import { Speciality } from './models/speciality.model';
-import { FetchSpecialityArgs } from './dto/fetch-speciality.args';
-import { FetchSpecialitiesArgs } from './dto/fetch-specialities.args';
 import { Group } from '../groups/models/group.model';
 import { GroupsService } from '../groups/groups.service';
 import { DivisionsService } from '../divisions/divisions.service';
@@ -23,46 +14,22 @@ export class SpecialitiesResolver {
     private readonly divisionsService: DivisionsService,
     private readonly facultiesService: FacultiesService,
     private readonly groupsService: GroupsService,
-    private readonly specialitiesService: SpecialitiesService,
   ) {}
 
   @ResolveProperty()
-  faculty(@Parent() { facultyId, academyId }: Speciality): Observable<Faculty> {
-    return this.facultiesService.fetchById({
-      academyId,
-      facultyId,
-    });
+  faculty(@Parent() { facultyId, academy }: Speciality): Observable<Faculty> {
+    return this.facultiesService.fetchById(facultyId, academy);
   }
 
   @ResolveProperty()
-  division(@Parent() { divisionId, academyId }: Speciality): Observable<
+  division(@Parent() { divisionId, academy }: Speciality): Observable<
     Division
   > {
-    return this.divisionsService.fetchById({
-      academyId,
-      divisionId,
-    });
+    return this.divisionsService.fetchById(divisionId, academy);
   }
 
   @ResolveProperty()
-  groups(@Parent() { id, academyId }: Speciality): Observable<Group[]> {
-    return this.groupsService.fetchBySpecialityId({
-      academyId,
-      specialityId: id,
-    });
-  }
-
-  @Query(returns => Speciality, { name: 'speciality' })
-  fetchSpeciality(
-    @Args() fetchSpecialityArgs: FetchSpecialityArgs,
-  ): Observable<Speciality> {
-    return this.specialitiesService.fetchById(fetchSpecialityArgs);
-  }
-
-  @Query(returns => [Speciality], { name: 'specialities' })
-  fetchSpecialities(
-    @Args() fetchSpecialitiesArgs: FetchSpecialitiesArgs,
-  ): Observable<Speciality[]> {
-    return this.specialitiesService.fetchAll(fetchSpecialitiesArgs);
+  groups(@Parent() { id, academy }: Speciality): Observable<Group[]> {
+    return this.groupsService.fetchBySpecialityId(id, academy);
   }
 }

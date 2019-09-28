@@ -9,9 +9,7 @@ export class DocumentMembersResolver {
   constructor(private readonly booksService: BooksService) {}
 
   @ResolveProperty()
-  book(
-    @Parent() { academyId, bookId }: DocumentMember,
-  ): Observable<Book> {
-    return this.booksService.fetchById({ academyId, bookId });
+  book(@Parent() { bookId, academy }: DocumentMember): Observable<Book> {
+    return this.booksService.fetchById(bookId, academy);
   }
 }

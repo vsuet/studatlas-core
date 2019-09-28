@@ -12,6 +12,8 @@ export class MongooseConfigService implements MongooseOptionsFactory {
     const { uri } = this.config.get('mongoose');
     return {
       uri,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     };
   }
 }

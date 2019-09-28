@@ -8,5 +8,6 @@ import { PracticesResolver } from './practices.resolver';
 @Module({
   imports: [GrabberModule, DivisionsModule],
   providers: [CurriculaResolver, CurriculaService, PracticesResolver],
+  exports: [CurriculaService],
 })
 export class CurriculaModule {}

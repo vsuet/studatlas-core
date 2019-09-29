@@ -304,6 +304,7 @@ type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
   me: UserInfo!
+  watchlist: [WatchlistBook!]!
 }
 
 type SaveStory {
@@ -371,4 +372,11 @@ type UserInfo {
   isVerified: Boolean
   picture: String
   createdAt: String
+  watchlist: [WatchlistBook!]!
+}
+
+type WatchlistBook {
+  bookId: ID!
+  book: Book
+  academy: Academy!
 }

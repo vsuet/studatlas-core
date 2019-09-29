@@ -10,9 +10,6 @@ import { Statistics } from '../statistics/models/statistics.model';
 import { StatisticsService } from '../statistics/statistics.service';
 import { StatisticsFilterArgs } from '../statistics/dto/statistics-filter.args';
 
-import { UseInterceptors } from '@nestjs/common';
-import { AcademyInterceptor } from '../academies/interceptors/academy.interceptor';
-
 @Resolver(of => Faculty)
 export class FacultiesResolver {
   constructor(
@@ -36,7 +33,6 @@ export class FacultiesResolver {
   }
 
   @ResolveProperty()
-  @UseInterceptors(AcademyInterceptor)
   groups(@Parent() { id, academy }: Faculty): Observable<Group[]> {
     return this.groupsService.fetchByFacultyId(id, academy);
   }

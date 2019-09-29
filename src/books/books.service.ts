@@ -49,9 +49,9 @@ export class BooksService {
   ): Promise<boolean> {
     let watchlist = await this.getWatchlist(userId);
 
-    const predicate = entry =>
-      entry.bookId === bookId && entry.academyId === academyId;
-    const isExists = watchlist.find(predicate);
+    const isExists = watchlist.find(
+      entry => entry.bookId === String(bookId) && entry.academyId === academyId,
+    );
 
     switch (action) {
       case 'add': {
@@ -65,7 +65,10 @@ export class BooksService {
         if (!isExists) {
           throw new NotFoundException('Вы уже отписались от этой зачетки  ');
         }
-        watchlist = watchlist.filter(predicate);
+        watchlist = watchlist.filter(
+          entry =>
+            !(entry.bookId === String(bookId) && entry.academyId === academyId),
+        );
         break;
       }
     }

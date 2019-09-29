@@ -22,6 +22,10 @@ type Academy {
     year: String
     semester: Int
   ): [Statistics!]
+  book(
+    """ID зачетки"""
+    id: ID!
+  ): Book!
   curriculum(
     """ID учебного плана"""
     id: ID!
@@ -259,6 +263,16 @@ type Group {
   books: [Book!]!
 }
 
+type Mutation {
+  subscribeBook(
+    """ID зачетки"""
+    bookId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Boolean!
+}
+
 type Practice {
   """Семестр"""
   semester: Int!
@@ -282,10 +296,7 @@ type Practice {
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
-  book(
-    """ID зачетки"""
-    id: ID!
-  ): Book!
+  me: UserInfo!
 }
 
 type SaveStory {
@@ -345,4 +356,12 @@ type Statistics {
 
   """Пустые"""
   blank: Int!
+}
+
+type UserInfo {
+  email: String
+  name: String
+  isVerified: Boolean
+  picture: String
+  createdAt: String
 }

@@ -62,7 +62,7 @@ export class AcademiesResolver {
 
   // properties
 
-  @Query(returns => Book)
+  @ResolveProperty(returns => Book)
   book(
     @Parent() academy: Academy,
     @Args() { id }: FetchBookArgs,

@@ -271,6 +271,13 @@ type Mutation {
     """ID вуза"""
     academyId: ID!
   ): Boolean!
+  unsubscribeBook(
+    """ID зачетки"""
+    bookId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Boolean!
 }
 
 type Practice {

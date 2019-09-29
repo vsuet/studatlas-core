@@ -13,10 +13,6 @@ export class AuthResolver {
   @Query(returns => UserInfo, { name: 'me' })
   @UseGuards(GqlAuthGuard)
   getUserInfo(@CurrentUser() currentUser: JwtPayload): Promise<UserInfo> {
-    return this.authService
-      .createManagementClient({
-        scope: 'read:users update:users',
-      })
-      .getUser({ id: currentUser.sub });
+    return this.authService.getUserInfo(currentUser.sub);
   }
 }

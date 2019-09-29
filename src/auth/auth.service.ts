@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectConfig } from 'nestjs-config';
 import { ManagementClient, ManagementClientOptions } from 'auth0';
 
@@ -8,8 +8,14 @@ export class AuthService {
     this.config = config;
   }
 
+  getUserInfo(id: string) {
+    return this.createManagementClient({
+      scope: 'read:users update:users',
+    }).getUser({ id });
+  }
+
   createManagementClient(
-    options: Omit<
+    options?: Omit<
       ManagementClientOptions,
       'domain' | 'clientId' | 'clientSecret'
     >,

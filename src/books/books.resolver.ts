@@ -16,6 +16,8 @@ import { EntriesFilterArgs } from './dto/entries-filter.args';
 import { UseGuards } from '@nestjs/common';
 import { SubscribeBookArgs } from './dto/subscribe-book.args';
 import { GqlAuthGuard } from '../shared/guards/gql-auth.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
 
 @Resolver(of => Book)
 export class BooksResolver {
@@ -40,7 +42,29 @@ export class BooksResolver {
 
   @Mutation(returns => Boolean)
   @UseGuards(GqlAuthGuard)
-  subscribeBook(@Args() { academyId, bookId }: SubscribeBookArgs): boolean {
-    return false;
+  async subscribeBook(
+    @CurrentUser() { sub }: JwtPayload,
+    @Args() { academyId, bookId }: SubscribeBookArgs,
+  ): Promise<boolean> {
+    return await this.booksService.toggleWatchlist(
+      sub,
+      academyId,
+      bookId,
+      'add',
+    );
+  }
+
+  @Mutation(returns => Boolean)
+  @UseGuards(GqlAuthGuard)
+  async unsubscribeBook(
+    @CurrentUser() { sub }: JwtPayload,
+    @Args() { academyId, bookId }: SubscribeBookArgs,
+  ): Promise<boolean> {
+    return await this.booksService.toggleWatchlist(
+      sub,
+      academyId,
+      bookId,
+      'remove',
+    );
   }
 }

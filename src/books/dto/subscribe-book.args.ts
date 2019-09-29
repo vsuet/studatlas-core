@@ -6,5 +6,5 @@ export class SubscribeBookArgs {
   bookId: number;
 
   @Field(type => ID, { description: 'ID вуза' })
-  academyId: number;
+  academyId: string;
 }

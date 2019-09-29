@@ -5,11 +5,13 @@ import { GrabberModule } from '../grabber/grabber.module';
 import { GroupsModule } from '../groups/groups.module';
 import { EntriesService } from './entries.service';
 import { AcademiesModule } from '../academies/academies.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     forwardRef(() => AcademiesModule),
     GrabberModule,
+    AuthModule,
     forwardRef(() => GroupsModule),
   ],
   providers: [BooksService, BooksResolver, EntriesService],

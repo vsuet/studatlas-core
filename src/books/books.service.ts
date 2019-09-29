@@ -1,14 +1,82 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { DataGrid } from '../grabber/classes/data-grid.class';
 import { GrabberService } from '../grabber/grabber.service';
 import { BOOK_SCHEMA } from './mocks/book-schema.mock';
 import { Academy } from '../academies/models/academy.model';
 import { DIRECTORY_PATH } from '../grabber/path.constants';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class BooksService {
-  constructor(private readonly grabberService: GrabberService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly grabberService: GrabberService,
+  ) {}
+
+  managementClient = this.authService.createManagementClient({
+    scope: 'read:users update:users',
+  });
+
+  async getWatchlist(userId: string): Promise<any[]> {
+    const { user_metadata } = await this.managementClient.getUser({
+      id: userId,
+    });
+    return !!user_metadata.books ? user_metadata.books : [];
+  }
+
+  async updateWatchlist(userId: string, watchlist: any[]): Promise<any[]> {
+    const { user_metadata } = await this.managementClient.getUser({
+      id: userId,
+    });
+    await this.managementClient.updateUserMetadata(
+      { id: userId },
+      { ...user_metadata, books: watchlist },
+    );
+    return watchlist;
+  }
+
+  async toggleWatchlist(
+    userId: string,
+    academyId: string,
+    bookId: number,
+    action: 'add' | 'remove',
+  ): Promise<boolean> {
+    let watchlist = await this.getWatchlist(userId);
+
+    const predicate = entry =>
+      entry.bookId === bookId && entry.academyId === academyId;
+    const isExists = watchlist.find(predicate);
+
+    switch (action) {
+      case 'add': {
+        if (isExists) {
+          throw new ConflictException('Вы уже подписались на эту зачетку');
+        }
+        watchlist.push({ bookId, academyId });
+        break;
+      }
+      case 'remove': {
+        if (!isExists) {
+          throw new NotFoundException('Вы уже отписались от этой зачетки  ');
+        }
+        watchlist = watchlist.filter(predicate);
+        break;
+      }
+    }
+
+    try {
+      await this.updateWatchlist(userId, watchlist);
+    } catch (e) {
+      throw new InternalServerErrorException();
+    }
+    return true;
+  }
 
   fetch(academy: Academy, params?: any) {
     return this.grabberService

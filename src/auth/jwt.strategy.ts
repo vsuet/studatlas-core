@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
+// TODO: prod!!!!!
 const envConfig = dotenv.parse(fs.readFileSync('.env'));
 
 @Injectable()

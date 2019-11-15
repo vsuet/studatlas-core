@@ -9,12 +9,9 @@ import { BooksModule } from '../books/books.module';
 import { StatisticsModule } from '../statistics/statistics.module';
 import { DocumentsModule } from '../documents/documents.module';
 import { CurriculaModule } from '../curricula/curricula.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AcademySchema } from './schemas/academy.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'Academy', schema: AcademySchema, collection: 'academies' }]),
     BooksModule,
     CurriculaModule,
     DivisionsModule,

@@ -5,12 +5,17 @@ import { FACULTY_SCHEMA } from './mocks/faculty-schema.mock';
 import { GrabberService } from '../grabber/grabber.service';
 import { Academy } from '../academies/models/academy.model';
 import { DIRECTORY_PATH } from '../grabber/path.constants';
+import { Observable } from 'rxjs';
+import { BaseEntitiesService } from '../shared/services/base-entities.service';
+import { FacultyConnection } from './models/faculty-connection.model';
 
 @Injectable()
-export class FacultiesService {
-  constructor(private readonly grabberService: GrabberService) {}
+export class FacultiesService extends BaseEntitiesService<FacultyConnection> {
+  constructor(private readonly grabberService: GrabberService) {
+    super();
+  }
 
-  fetch(academy: Academy, params?: any) {
+  fetch(academy: Academy, params?: any): Observable<any[]> {
     return this.grabberService
       .createClient()
       .get(DIRECTORY_PATH, {

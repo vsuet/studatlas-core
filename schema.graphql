@@ -11,45 +11,6 @@ type Academy {
   website: String!
   endpoint: String!
   version: String!
-  faculties: [Faculty!]
-  groups: [Group!]
-  divisions: [Division!]
-  specialities: [Speciality!]
-  statistics(
-    mode: String!
-
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): [Statistics!]
-  book(
-    """ID зачетки"""
-    id: ID!
-  ): Book!
-  curriculum(
-    """ID учебного плана"""
-    id: ID!
-  ): Curriculum!
-  division(
-    """ID кафедры"""
-    id: ID!
-  ): Division!
-  document(
-    """ID ведомости"""
-    id: ID!
-  ): Document!
-  faculty(
-    """ID факультета"""
-    id: ID!
-  ): Faculty!
-  group(
-    """ID группы"""
-    id: ID!
-  ): Group!
-  speciality(
-    """ID специальности"""
-    id: ID!
-  ): Speciality!
 }
 
 type Book {

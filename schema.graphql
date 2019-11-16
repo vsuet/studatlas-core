@@ -200,6 +200,40 @@ type Group {
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
+  me: UserInfo!
+  groupBooks(
+    """ID группы"""
+    groupId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Book!]!
+  bookEntries(
+    """ID зачетки"""
+    id: ID!
+
+    """Семестр"""
+    semester: Int
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Entry!]!
+  division: Division!
+  divisions: [Division!]!
+  document(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Document!
+  saveStories(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [SaveStory!]!
   faculty(
     """ID факультета"""
     id: ID!
@@ -220,25 +254,6 @@ type Query {
     academyId: ID!
   ): [Group!]!
   speciality: [Speciality!]!
-  division: Division!
-  divisions: [Division!]!
-  groupBooks(
-    """ID группы"""
-    groupId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): [Book!]!
-  bookEntries(
-    """ID зачетки"""
-    id: ID!
-
-    """Семестр"""
-    semester: Int
-
-    """ID вуза"""
-    academyId: ID!
-  ): [Entry!]!
   statistics(
     mode: String!
 
@@ -249,21 +264,6 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Statistics!]!
-  document(
-    """ID ведомости"""
-    id: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Document!
-  saveStories(
-    """ID ведомости"""
-    id: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): [SaveStory!]!
-  me: UserInfo!
 }
 
 type SaveStory {

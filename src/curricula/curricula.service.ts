@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
-import * as cheerio from 'cheerio';
-import * as queryString from 'query-string';
 import { PRACTICE_SCHEMA } from './mocks/practice-schema.mock';
 import { Academy } from '../academies/models/academy.model';
 

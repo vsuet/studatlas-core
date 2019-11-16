@@ -4,4 +4,7 @@ import { ArgsType, Field, ID } from 'type-graphql';
 export class FetchFacultyArgs {
   @Field(type => ID, { description: 'ID факультета' })
   id: number;
+
+  @Field(type => ID, { description: 'ID вуза' })
+  academyId: string;
 }

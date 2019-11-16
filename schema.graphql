@@ -186,11 +186,7 @@ type Faculty {
   specialities: [Speciality!]
 
   """Статистика по факультету"""
-  statistics(
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): Statistics!
+  statistics: Statistics!
 }
 
 type Group {
@@ -264,6 +260,8 @@ type Practice {
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
+  faculty: Faculty!
+  faculties: Faculty!
   me: UserInfo!
   watchlist: [WatchlistBook!]!
 }

@@ -2,6 +2,9 @@ import { ArgsType, ID, Int, Field } from 'type-graphql';
 
 @ArgsType()
 export class FetchFacultiesArgs {
+  @Field(type => ID)
+  academyId: string;
+
   @Field(type => Int, {
     nullable: true,
     defaultValue: 10,

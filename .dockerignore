@@ -1,0 +1,23 @@
+# Git #
+.git
+.github
+.gitignore
+
+.prettierrc
+tslint.json
+.env.example
+coverage
+docker-compose.yml
+
+# Docs #
+LICENSE
+README.md
+
+# Node Files #
+node_modules
+npm-debug.log
+npm-debug.log.*
+
+# IDE #
+.idea
+.vscode

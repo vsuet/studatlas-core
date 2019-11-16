@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Group } from './models/group.model';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { GroupService } from './interfaces/group-service.interface';
 import { FetchGroupArgs } from './dto/fetch-group.args';
 import { map } from 'rxjs/operators';

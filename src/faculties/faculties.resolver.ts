@@ -4,7 +4,7 @@ import { FetchFacultyArgs } from './dto/fetch-faculty.args';
 import { FacultyService } from './interfaces/faculty-service.interface';
 import { map } from 'rxjs/operators';
 import { FetchFacultiesArgs } from './dto/fetch-faculties.args';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver extends EntityResolver {

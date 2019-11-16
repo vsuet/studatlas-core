@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Book } from './models/book.model';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { BookService } from './interfaces/book-service.interface';
 import { FetchEntriesArgs } from './dto/fetch-entries.args';
 import { map } from 'rxjs/operators';

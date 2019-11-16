@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Statistics } from './models/statistics.model';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { StatisticsService } from './interfaces/statistics-service.interface';
 import { FetchStatisticsArgs } from './dto/fetch-statistics.args';
 import { map } from 'rxjs/operators';

@@ -3,7 +3,7 @@ import { Division } from './models/division.model';
 import { FetchDivisionArgs } from './dto/fetch-division.args';
 import { DivisionService } from './interfaces/division-service.interface';
 import { map } from 'rxjs/operators';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
 
 @Resolver(of => Division)

@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Document } from './models/document.model';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { FetchDocumentArgs } from './dto/fetch-document.args';
 import { map } from 'rxjs/operators';
 import { SaveStory } from './models/save-story.model';

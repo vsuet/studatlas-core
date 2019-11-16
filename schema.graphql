@@ -219,6 +219,7 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Group!]!
+  speciality: [Speciality!]!
   division: Division!
   divisions: [Division!]!
   groupBooks(

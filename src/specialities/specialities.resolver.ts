@@ -1,6 +1,6 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { Speciality } from './models/speciality.model';
-import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { SpecialityService } from './interafces/speciality-service.interface';
 import { FetchSpecialityArgs } from './dto/fetch-speciality.args';
 import { map } from 'rxjs/operators';

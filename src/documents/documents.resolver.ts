@@ -1,49 +1,31 @@
-import { Args, Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
-import { Observable, of } from 'rxjs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Document } from './models/document.model';
-import { DocumentsService } from './documents.service';
-import { Division } from '../divisions/models/division.model';
-import { DivisionsService } from '../divisions/divisions.service';
-import { GroupsService } from '../groups/groups.service';
-import { Group } from '../groups/models/group.model';
-import { DocumentMember } from './models/document-member.model';
-import { ResolveMemberPropertyArgs } from './dto/resolve-member-property.args';
-import { SaveStoriesService } from './save-stories.service';
+import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { FetchDocumentArgs } from './dto/fetch-document.args';
+import { map } from 'rxjs/operators';
 import { SaveStory } from './models/save-story.model';
+import { DocumentService } from './interfaces/document-service.interface';
 
 // tslint:disable-next-line:no-shadowed-variable
 @Resolver(of => Document)
-export class DocumentsResolver {
-  constructor(
-    private readonly divisionsService: DivisionsService,
-    private readonly groupsService: GroupsService,
-    private readonly documentsService: DocumentsService,
-    private readonly saveStoriesService: SaveStoriesService,
-  ) {}
+export class DocumentsResolver extends EntityResolver {
+  private documentService: DocumentService;
 
-  @ResolveProperty()
-  saveStories(@Parent() { id, academy }: Document): Observable<SaveStory> {
-    return this.saveStoriesService.fetchByDocumentId(id, academy);
+  onModuleInit() {
+    this.documentService = this.client.getService<DocumentService>(
+      'DocumentService',
+    );
   }
 
-  @ResolveProperty()
-  members(
-    @Args() { bookId }: ResolveMemberPropertyArgs,
-    @Parent() { members }: Document,
-  ): Observable<DocumentMember[]> {
-    if (!bookId) {
-      return of(members);
-    }
-    return of(members.filter(member => member.bookId === Number(bookId)));
+  @Query(returns => Document, { name: 'document' })
+  getDocument(@Args() { id, academyId }: FetchDocumentArgs) {
+    return this.documentService.getDocument({ id, academyId });
   }
 
-  @ResolveProperty()
-  division(@Parent() { divisionId, academy }: Document): Observable<Division> {
-    return this.divisionsService.fetchById(divisionId, academy);
-  }
-
-  @ResolveProperty()
-  group(@Parent() { groupId, academy }: Document): Observable<Group> {
-    return this.groupsService.fetchById(groupId, academy);
+  @Query(returns => [SaveStory], { name: 'saveStories' })
+  getSaveStories(@Args() { id, academyId }: FetchDocumentArgs) {
+    return this.documentService
+      .listDocumentSaveStories({ id, academyId })
+      .pipe(map(({ data }) => data));
   }
 }

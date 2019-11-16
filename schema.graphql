@@ -23,23 +23,7 @@ type Book {
   group: Group!
 
   """Записи из зачетки"""
-  entries(
-    """Семестр"""
-    semester: Int
-  ): [Entry!]!
-}
-
-type Curriculum {
-  id: ID!
-
-  """Название учебного плана"""
-  name: String!
-
-  """Краткое описание учебного плана"""
-  description: String!
-
-  """Практики"""
-  practices: [Practice!]!
+  entries: [Entry!]!
 }
 
 type Division {
@@ -61,11 +45,7 @@ type Division {
   room: String
 
   """Статистика по кафедре"""
-  statistics(
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): Statistics!
+  statistics: Statistics!
 }
 
 type Document {
@@ -123,10 +103,7 @@ type Document {
 
   """Группа"""
   groupName: String!
-  members(
-    """ID зачетки"""
-    bookId: ID
-  ): [DocumentMember!]
+  members: [DocumentMember!]
   saveStories: [SaveStory!]
 }
 
@@ -220,50 +197,72 @@ type Group {
   books: [Book!]!
 }
 
-type Mutation {
-  subscribeBook(
-    """ID зачетки"""
-    bookId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Boolean!
-  unsubscribeBook(
-    """ID зачетки"""
-    bookId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Boolean!
-}
-
-type Practice {
-  """Семестр"""
-  semester: Int!
-
-  """Недель"""
-  weeks: Int!
-
-  """Вид"""
-  type: String!
-
-  """Категория"""
-  category: String!
-
-  """Код кафедры"""
-  divisionId: Int!
-
-  """Кафедра"""
-  division: Division
-}
-
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
-  faculty: Faculty!
-  faculties: Faculty!
+  faculty(
+    """ID факультета"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Faculty!
+  faculties(academyId: ID!, first: Int = 10, after: ID): [Faculty!]!
+  group(
+    """ID группы"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Group!
+  groups(
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  division: Division!
+  divisions: [Division!]!
+  groupBooks(
+    """ID группы"""
+    groupId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Book!]!
+  bookEntries(
+    """ID зачетки"""
+    id: ID!
+
+    """Семестр"""
+    semester: Int
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Entry!]!
+  statistics(
+    mode: String!
+
+    """Учебный год"""
+    year: String
+    semester: Int
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Statistics!]!
+  document(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Document!
+  saveStories(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [SaveStory!]!
   me: UserInfo!
-  watchlist: [WatchlistBook!]!
 }
 
 type SaveStory {
@@ -331,11 +330,4 @@ type UserInfo {
   isVerified: Boolean
   picture: String
   createdAt: String
-  watchlist: [WatchlistBook!]!
-}
-
-type WatchlistBook {
-  bookId: ID!
-  book: Book
-  academy: Academy!
 }

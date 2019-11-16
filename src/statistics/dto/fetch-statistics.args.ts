@@ -1,4 +1,4 @@
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, Int, ID } from 'type-graphql';
 
 @ArgsType()
 export class FetchStatisticsArgs {
@@ -10,4 +10,7 @@ export class FetchStatisticsArgs {
 
   @Field(type => Int, { nullable: true })
   semester: number;
+
+  @Field(type => ID, { description: 'ID вуза' })
+  academyId: string;
 }

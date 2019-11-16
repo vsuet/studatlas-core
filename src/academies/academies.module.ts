@@ -13,12 +13,12 @@ import { CurriculaModule } from '../curricula/curricula.module';
 @Module({
   imports: [
     BooksModule,
-    CurriculaModule,
+    //CurriculaModule,
     DivisionsModule,
     DocumentsModule,
     FacultiesModule,
     GroupsModule,
-    SpecialitiesModule,
+    //SpecialitiesModule,
     StatisticsModule,
   ],
   providers: [AcademiesResolver, AcademiesService],

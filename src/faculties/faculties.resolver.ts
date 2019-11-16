@@ -1,18 +1,14 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Faculty } from './models/faculty.model';
 import { FetchFacultyArgs } from './dto/fetch-faculty.args';
-import { OnModuleInit } from '@nestjs/common';
-import { Client, ClientGrpc } from '@nestjs/microservices';
 import { FacultyService } from './interfaces/faculty-service.interface';
 import { map } from 'rxjs/operators';
-import { grabberClientOptions } from '../grabber/options/grabber-client.options';
 import { FetchFacultiesArgs } from './dto/fetch-faculties.args';
+import { EntityResolver } from '../grabber/classes/entity-resolver.class';
 
 @Resolver(of => Faculty)
-export class FacultiesResolver implements OnModuleInit {
+export class FacultiesResolver extends EntityResolver {
   private facultyService: FacultyService;
-  @Client(grabberClientOptions)
-  private readonly client: ClientGrpc;
 
   onModuleInit() {
     this.facultyService = this.client.getService<FacultyService>(
@@ -21,14 +17,14 @@ export class FacultiesResolver implements OnModuleInit {
   }
 
   @Query(returns => Faculty, { name: 'faculty' })
-  getFaculty({ id, academyId }: FetchFacultyArgs) {
+  getFaculty(@Args() { id, academyId }: FetchFacultyArgs) {
     return this.facultyService
       .getFaculty({ id, academyId })
       .pipe(map(({ data }) => data.pop()));
   }
 
-  @Query(returns => Faculty, { name: 'faculties' })
-  getFaculties({ academyId }: FetchFacultiesArgs) {
+  @Query(returns => [Faculty], { name: 'faculties' })
+  getFaculties(@Args() { academyId }: FetchFacultiesArgs) {
     return this.facultyService
       .listFaculties({ academyId })
       .pipe(map(({ data }) => data));

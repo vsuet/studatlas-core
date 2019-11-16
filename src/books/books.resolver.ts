@@ -1,70 +1,59 @@
-import {
-  Args,
-  Mutation,
-  Parent,
-  ResolveProperty,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Book } from './models/book.model';
-import { Observable } from 'rxjs';
-import { BooksService } from './books.service';
-import { GroupsService } from '../groups/groups.service';
-import { Group } from '../groups/models/group.model';
-import { EntriesService } from './entries.service';
+import { EntityResolver } from '../grabber/classes/entity-resolver.class';
+import { BookService } from './interfaces/book-service.interface';
+import { FetchEntriesArgs } from './dto/fetch-entries.args';
+import { map } from 'rxjs/operators';
 import { Entry } from './models/entry.model';
-import { EntriesFilterArgs } from './dto/entries-filter.args';
-import { UseGuards } from '@nestjs/common';
-import { SubscribeBookArgs } from './dto/subscribe-book.args';
-import { GqlAuthGuard } from '../shared/guards/gql-auth.guard';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
+import { FetchGroupBooksArgs } from './dto/fetch-group-books.args';
 
 @Resolver(of => Book)
-export class BooksResolver {
-  constructor(
-    private readonly booksService: BooksService,
-    private readonly entriesService: EntriesService,
-    private readonly groupsService: GroupsService,
-  ) {}
+export class BooksResolver extends EntityResolver {
+  private bookService: BookService;
 
-  @ResolveProperty(returns => [Entry])
-  entries(
-    @Args() { semester }: EntriesFilterArgs,
-    @Parent() { id, academy }: Book,
-  ): Observable<Entry[]> {
-    return this.entriesService.fetchByBookId(id, semester, academy);
+  onModuleInit() {
+    this.bookService = this.client.getService<BookService>('BookService');
   }
 
-  @ResolveProperty(returns => Group)
-  group(@Parent() { groupId, academy }: Book): Observable<Group> {
-    return this.groupsService.fetchById(groupId, academy);
+  @Query(returns => [Book], { name: 'groupBooks' })
+  getBooksByGroup(@Args() { groupId, academyId }: FetchGroupBooksArgs) {
+    return this.bookService
+      .listGroupBooks({ groupId, academyId })
+      .pipe(map(({ data }) => data));
   }
 
-  @Mutation(returns => Boolean)
-  @UseGuards(GqlAuthGuard)
-  async subscribeBook(
-    @CurrentUser() { sub }: JwtPayload,
-    @Args() { academyId, bookId }: SubscribeBookArgs,
-  ): Promise<boolean> {
-    return await this.booksService.toggleWatchlist(
-      sub,
-      academyId,
-      bookId,
-      'add',
-    );
+  @Query(returns => [Entry], { name: 'bookEntries' })
+  getBookEntries(@Args() { id, semester, academyId }: FetchEntriesArgs) {
+    return this.bookService
+      .listBookEntries({ id, semester, academyId })
+      .pipe(map(({ data }) => data));
   }
 
-  @Mutation(returns => Boolean)
-  @UseGuards(GqlAuthGuard)
-  async unsubscribeBook(
-    @CurrentUser() { sub }: JwtPayload,
-    @Args() { academyId, bookId }: SubscribeBookArgs,
-  ): Promise<boolean> {
-    return await this.booksService.toggleWatchlist(
-      sub,
-      academyId,
-      bookId,
-      'remove',
-    );
-  }
+  // @Mutation(returns => Boolean)
+  // @UseGuards(GqlAuthGuard)
+  // async subscribeBook(
+  //   @CurrentUser() { sub }: JwtPayload,
+  //   @Args() { academyId, bookId }: SubscribeBookArgs,
+  // ): Promise<boolean> {
+  //   return await this.booksService.toggleWatchlist(
+  //     sub,
+  //     academyId,
+  //     bookId,
+  //     'add',
+  //   );
+  // }
+  //
+  // @Mutation(returns => Boolean)
+  // @UseGuards(GqlAuthGuard)
+  // async unsubscribeBook(
+  //   @CurrentUser() { sub }: JwtPayload,
+  //   @Args() { academyId, bookId }: SubscribeBookArgs,
+  // ): Promise<boolean> {
+  //   return await this.booksService.toggleWatchlist(
+  //     sub,
+  //     academyId,
+  //     bookId,
+  //     'remove',
+  //   );
+  // }
 }

@@ -12,7 +12,7 @@ import { DocumentsModule } from '../documents/documents.module';
 @Module({
   imports: [
     BooksModule,
-    //CurriculaModule,
+    // CurriculaModule,
     DivisionsModule,
     DocumentsModule,
     FacultiesModule,

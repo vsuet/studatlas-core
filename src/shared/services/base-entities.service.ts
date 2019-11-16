@@ -17,5 +17,5 @@ export abstract class BaseEntitiesService<EntityConnection> {
       pageInfo,
       edges,
     };
-  };
+  }
 }

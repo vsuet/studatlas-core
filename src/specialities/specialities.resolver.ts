@@ -23,7 +23,7 @@ export class SpecialitiesResolver extends EntityResolver {
       .pipe(map(({ data }) => data.pop()));
   }
 
-  @Query(returns => [Speciality], { name: 'speciality' })
+  @Query(returns => [Speciality], { name: 'specialities' })
   getSpecialities(@Args() { academyId }: FetchSpecialitiesArgs) {
     return this.specialityService
       .listSpecialities({ academyId })

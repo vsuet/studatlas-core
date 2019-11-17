@@ -4,7 +4,8 @@ import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { GroupService } from './interfaces/group-service.interface';
 import { FetchGroupArgs } from './dto/fetch-group.args';
 import { map } from 'rxjs/operators';
-import { FetchGroupsArgs } from './dto/fetch-groups.args';
+import { FetchFacultyGroupsArgs } from './dto/fetch-faculty-groups.args';
+import { FetchSpecialityGroupsArgs } from './dto/fetch-speciality-groups.args';
 
 @Resolver(of => Group)
 export class GroupsResolver extends EntityResolver {
@@ -21,10 +22,19 @@ export class GroupsResolver extends EntityResolver {
       .pipe(map(({ data }) => data.pop()));
   }
 
-  @Query(returns => [Group], { name: 'groups' })
-  getGroups(@Args() { academyId }: FetchGroupsArgs) {
+  @Query(returns => [Group], { name: 'facultyGroups' })
+  getFacultyGroups(@Args() { facultyId, academyId }: FetchFacultyGroupsArgs) {
     return this.groupService
-      .listGroups({ academyId })
+      .listFacultyGroups({ facultyId, academyId })
+      .pipe(map(({ data }) => data));
+  }
+
+  @Query(returns => [Group], { name: 'specialityGroups' })
+  getSpecialityGroups(
+    @Args() { specialityId, academyId }: FetchSpecialityGroupsArgs,
+  ) {
+    return this.groupService
+      .listSpecialityGroups({ specialityId, academyId })
       .pipe(map(({ data }) => data));
   }
 }

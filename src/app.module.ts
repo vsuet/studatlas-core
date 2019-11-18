@@ -12,6 +12,7 @@ import { FacultiesModule } from './faculties/faculties.module';
 import { GroupsModule } from './groups/groups.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { CurriculaModule } from './curricula/curricula.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     AuthModule,
     AcademiesModule,
     BooksModule,
-    // CurriculaModule,
+    CurriculaModule,
     DivisionsModule,
     DocumentsModule,
     FacultiesModule,

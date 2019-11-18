@@ -26,6 +26,29 @@ type Book {
   entries: [Entry!]!
 }
 
+type Curriculum {
+  id: ID!
+
+  """Название учебного плана"""
+  name: String!
+
+  """Краткое описание учебного плана"""
+  description: String!
+
+  """Практики"""
+  practices: [Practice!]!
+}
+
+type CurriculumItem {
+  id: ID!
+
+  """Название учебного плана"""
+  name: String!
+
+  """Краткое описание учебного плана"""
+  speciality: String!
+}
+
 type Division {
   id: ID!
 
@@ -197,6 +220,26 @@ type Group {
   books: [Book!]!
 }
 
+type Practice {
+  """Семестр"""
+  semester: Int!
+
+  """Недель"""
+  weeks: Int!
+
+  """Вид"""
+  type: String!
+
+  """Категория"""
+  category: String!
+
+  """Код кафедры"""
+  divisionId: Int!
+
+  """Кафедра"""
+  division: Division
+}
+
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
@@ -293,6 +336,16 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Statistics!]!
+  facultyCurricula(
+    """ID факультета"""
+    facultyId: ID!
+
+    """ID учебного плана"""
+    academyId: ID!
+
+    """ID учебного плана"""
+    years: String
+  ): [CurriculumItem!]!
 }
 
 type SaveStory {

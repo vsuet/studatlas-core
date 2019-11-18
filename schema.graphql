@@ -218,8 +218,17 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Entry!]!
-  division: Division!
-  divisions: [Division!]!
+  division(
+    """ID кафедры"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Division!
+  divisions(
+    """ID вуза"""
+    academyId: ID!
+  ): [Division!]!
   document(
     """ID ведомости"""
     id: ID!
@@ -249,11 +258,31 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): Group!
-  groups(
+  facultyGroups(
+    """ID факультета"""
+    facultyId: ID!
+
     """ID вуза"""
     academyId: ID!
   ): [Group!]!
-  speciality: [Speciality!]!
+  specialityGroups(
+    """ID специальности"""
+    specialityId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  speciality(
+    """ID специальности"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Speciality!
+  specialities(
+    """ID вуза"""
+    academyId: ID!
+  ): [Speciality!]!
   statistics(
     mode: String!
 

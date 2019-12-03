@@ -1,9 +1,9 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Academy } from './models/academy.model';
-import { GetAcademyArgs } from './dto/get-academy.args';
+import { Academy } from '../models/academy.model';
+import { GetAcademyArgs } from '../dto/get-academy.args';
 import { map } from 'rxjs/operators';
-import { AcademyService } from './interfaces/academy-service.interface';
-import { EntityResolver } from '../shared/classes/entity-resolver.class';
+import { AcademyService } from '../interfaces/academy-service.interface';
+import { EntityResolver } from '../../shared/classes/entity-resolver.class';
 
 @Resolver(of => Academy)
 export class AcademiesResolver extends EntityResolver {

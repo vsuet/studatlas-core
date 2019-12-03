@@ -20,6 +20,5 @@ export class Academy {
   @Field()
   endpoint: string;
 
-  @Field()
   version?: string;
 }

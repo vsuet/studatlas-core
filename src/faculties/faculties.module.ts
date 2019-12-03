@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FacultiesResolver } from './faculties.resolver';
+import { FacultiesResolver } from './resolvers/faculties.resolver';
 
 @Module({
   providers: [FacultiesResolver],

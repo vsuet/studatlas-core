@@ -1,9 +1,9 @@
 import { ArgsType, Field, ID } from 'type-graphql';
 
 @ArgsType()
-export class FetchSpecialityArgs {
-  @Field(type => ID, { description: 'ID специальности' })
-  id: number;
+export class GetFacultyGroupsArgs {
+  @Field(type => ID, { description: 'ID факультета' })
+  facultyId: number;
 
   @Field(type => ID, { description: 'ID вуза' })
   academyId: string;

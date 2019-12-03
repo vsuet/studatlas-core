@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CurriculaResolver } from './curricula.resolver';
+import { CurriculaResolver } from './resolvers/curricula.resolver';
 
 @Module({
   providers: [CurriculaResolver],

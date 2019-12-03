@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { StatisticsResolver } from './statistics.resolver';
+import { StatisticsResolver } from './resolvers/statistics.resolver';
 
 @Module({
   providers: [StatisticsResolver],

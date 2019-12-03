@@ -10,7 +10,6 @@ type Academy {
   abbreviation: String!
   website: String!
   endpoint: String!
-  version: String!
 }
 
 type Book {
@@ -178,15 +177,6 @@ type Faculty {
 
   """Аудитория"""
   room: String
-
-  """Группы факультета"""
-  groups: [Group!]
-
-  """Специальности факультета"""
-  specialities: [Speciality!]
-
-  """Статистика по факультету"""
-  statistics: Statistics!
 }
 
 type Group {
@@ -212,12 +202,6 @@ type Group {
 
   """Учебный план группы"""
   curricula: String
-
-  """Специальность группы"""
-  speciality: Speciality
-
-  """Зачетки группы"""
-  books: [Book!]!
 }
 
 type Practice {
@@ -301,6 +285,11 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): Group!
+  groups(
+    """ID вуза"""
+    academyId: ID!
+    page: Int = 1
+  ): [Group!]!
   facultyGroups(
     """ID факультета"""
     facultyId: ID!

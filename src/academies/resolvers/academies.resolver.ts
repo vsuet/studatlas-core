@@ -4,6 +4,7 @@ import { GetAcademyArgs } from '../dto/get-academy.args';
 import { map } from 'rxjs/operators';
 import { AcademyService } from '../interfaces/academy-service.interface';
 import { EntityResolver } from '../../shared/classes/entity-resolver.class';
+import { SearchAcademiesArgs } from '../dto/search-academies.args';
 
 @Resolver(of => Academy)
 export class AcademiesResolver extends EntityResolver {
@@ -25,5 +26,12 @@ export class AcademiesResolver extends EntityResolver {
   @Query(returns => [Academy], { name: 'academies' })
   getAcademies() {
     return this.academyService.listAcademies({}).pipe(map(({ data }) => data));
+  }
+
+  @Query(returns => [Academy])
+  searchAcademies(@Args() { term }: SearchAcademiesArgs) {
+    return this.academyService
+      .searchAcademies({ term })
+      .pipe(map(({ data }) => data));
   }
 }

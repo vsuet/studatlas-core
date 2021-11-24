@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { CurriculaResolver } from './curricula.resolver';
-import { CurriculaService } from './curricula.service';
-import { PracticesResolver } from './practices.resolver';
+import { CurriculaResolver } from './resolvers/curricula.resolver';
 
 @Module({
-  providers: [CurriculaResolver, CurriculaService, PracticesResolver],
-  exports: [CurriculaService],
+  providers: [CurriculaResolver],
 })
 export class CurriculaModule {}

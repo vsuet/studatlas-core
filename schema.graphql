@@ -10,7 +10,6 @@ type Academy {
   abbreviation: String!
   website: String!
   endpoint: String!
-  version: String!
 }
 
 type Book {
@@ -24,6 +23,29 @@ type Book {
 
   """Записи из зачетки"""
   entries: [Entry!]!
+}
+
+type Curriculum {
+  id: ID!
+
+  """Название учебного плана"""
+  name: String!
+
+  """Краткое описание учебного плана"""
+  description: String!
+
+  """Практики"""
+  practices: [Practice!]!
+}
+
+type CurriculumItem {
+  id: ID!
+
+  """Название учебного плана"""
+  name: String!
+
+  """Краткое описание учебного плана"""
+  speciality: String!
 }
 
 type Division {
@@ -155,15 +177,6 @@ type Faculty {
 
   """Аудитория"""
   room: String
-
-  """Группы факультета"""
-  groups: [Group!]
-
-  """Специальности факультета"""
-  specialities: [Speciality!]
-
-  """Статистика по факультету"""
-  statistics: Statistics!
 }
 
 type Group {
@@ -189,12 +202,26 @@ type Group {
 
   """Учебный план группы"""
   curricula: String
+}
 
-  """Специальность группы"""
-  speciality: Speciality
+type Practice {
+  """Семестр"""
+  semester: Int!
 
-  """Зачетки группы"""
-  books: [Book!]!
+  """Недель"""
+  weeks: Int!
+
+  """Вид"""
+  type: String!
+
+  """Категория"""
+  category: String!
+
+  """Код кафедры"""
+  divisionId: Int!
+
+  """Кафедра"""
+  division: Division
 }
 
 type Query {
@@ -218,8 +245,17 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Entry!]!
-  division: Division!
-  divisions: [Division!]!
+  division(
+    """ID кафедры"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Division!
+  divisions(
+    """ID вуза"""
+    academyId: ID!
+  ): [Division!]!
   document(
     """ID ведомости"""
     id: ID!
@@ -252,8 +288,33 @@ type Query {
   groups(
     """ID вуза"""
     academyId: ID!
+    page: Int = 1
   ): [Group!]!
-  speciality: [Speciality!]!
+  facultyGroups(
+    """ID факультета"""
+    facultyId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  specialityGroups(
+    """ID специальности"""
+    specialityId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  speciality(
+    """ID специальности"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Speciality!
+  specialities(
+    """ID вуза"""
+    academyId: ID!
+  ): [Speciality!]!
   statistics(
     mode: String!
 
@@ -264,6 +325,16 @@ type Query {
     """ID вуза"""
     academyId: ID!
   ): [Statistics!]!
+  facultyCurricula(
+    """ID факультета"""
+    facultyId: ID!
+
+    """ID учебного плана"""
+    academyId: ID!
+
+    """ID учебного плана"""
+    years: String
+  ): [CurriculumItem!]!
 }
 
 type SaveStory {

@@ -1,7 +1,7 @@
-import { ArgsType, Field, ID } from 'type-graphql';
+import { ArgsType, Field, ID, Int } from 'type-graphql';
 
 @ArgsType()
-export class FetchGroupArgs {
+export class GetGroupArgs {
   @Field(type => ID, { description: 'ID группы' })
   id: number;
 

@@ -6,7 +6,7 @@ export interface GroupService {
     id: number;
     academyId: string;
   }): Observable<{ data: Group[] }>;
-  listGroups(data: { academyId: string }): Observable<{ data: Group[] }>;
+  listGroups(data: { academyId: string, page?: number }): Observable<{ data: Group[] }>;
   listFacultyGroups(data: {
     facultyId: number;
     academyId: string;

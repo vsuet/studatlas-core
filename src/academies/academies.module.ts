@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AcademiesResolver } from './academies.resolver';
+import { AcademiesResolver } from './resolvers/academies.resolver';
 // import { CurriculaModule } from '../curricula/curricula.module';
 
 @Module({

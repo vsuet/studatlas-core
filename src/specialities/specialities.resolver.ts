@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Speciality } from './models/speciality.model';
 import { EntityResolver } from '../shared/classes/entity-resolver.class';
 import { SpecialityService } from './interafces/speciality-service.interface';
@@ -17,14 +17,14 @@ export class SpecialitiesResolver extends EntityResolver {
   }
 
   @Query(returns => Speciality, { name: 'speciality' })
-  getSpeciality({ id, academyId }: FetchSpecialityArgs) {
+  getSpeciality(@Args() { id, academyId }: FetchSpecialityArgs) {
     return this.specialityService
       .getSpeciality({ id, academyId })
       .pipe(map(({ data }) => data.pop()));
   }
 
-  @Query(returns => [Speciality], { name: 'speciality' })
-  getSpecialities({ academyId }: FetchSpecialitiesArgs) {
+  @Query(returns => [Speciality], { name: 'specialities' })
+  getSpecialities(@Args() { academyId }: FetchSpecialitiesArgs) {
     return this.specialityService
       .listSpecialities({ academyId })
       .pipe(map(({ data }) => data));

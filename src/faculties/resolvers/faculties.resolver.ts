@@ -1,10 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Faculty } from './models/faculty.model';
-import { FetchFacultyArgs } from './dto/fetch-faculty.args';
-import { FacultyService } from './interfaces/faculty-service.interface';
+import { Faculty } from '../models/faculty.model';
+import { GetFacultyArgs } from '../dto/get-faculty.args';
+import { FacultyService } from '../interfaces/faculty-service.interface';
 import { map } from 'rxjs/operators';
-import { FetchFacultiesArgs } from './dto/fetch-faculties.args';
-import { EntityResolver } from '../shared/classes/entity-resolver.class';
+import { GetFacultiesArgs } from '../dto/get-faculties.args';
+import { EntityResolver } from '../../shared/classes/entity-resolver.class';
 
 @Resolver(of => Faculty)
 export class FacultiesResolver extends EntityResolver {
@@ -17,14 +17,14 @@ export class FacultiesResolver extends EntityResolver {
   }
 
   @Query(returns => Faculty, { name: 'faculty' })
-  getFaculty(@Args() { id, academyId }: FetchFacultyArgs) {
+  getFaculty(@Args() { id, academyId }: GetFacultyArgs) {
     return this.facultyService
       .getFaculty({ id, academyId })
       .pipe(map(({ data }) => data.pop()));
   }
 
   @Query(returns => [Faculty], { name: 'faculties' })
-  getFaculties(@Args() { academyId }: FetchFacultiesArgs) {
+  getFaculties(@Args() { academyId }: GetFacultiesArgs) {
     return this.facultyService
       .listFaculties({ academyId })
       .pipe(map(({ data }) => data));

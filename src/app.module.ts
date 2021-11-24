@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AcademiesModule } from './academies/academies.module';
 import { ConfigModule } from 'nestjs-config';
@@ -12,6 +12,8 @@ import { FacultiesModule } from './faculties/faculties.module';
 import { GroupsModule } from './groups/groups.module';
 import { SpecialitiesModule } from './specialities/specialities.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { CurriculaModule } from './curricula/curricula.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -24,7 +26,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     AuthModule,
     AcademiesModule,
     BooksModule,
-    // CurriculaModule,
+    CurriculaModule,
     DivisionsModule,
     DocumentsModule,
     FacultiesModule,

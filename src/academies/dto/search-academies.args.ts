@@ -1,7 +1,7 @@
 import { ArgsType, Field } from 'type-graphql';
 
 @ArgsType()
-export class GetAcademyArgs {
+export class SearchAcademiesArgs {
   @Field()
-  id: string;
+  term: string;
 }

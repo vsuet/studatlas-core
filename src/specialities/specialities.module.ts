@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SpecialitiesResolver } from './specialities.resolver';
+import { SpecialitiesResolver } from './resolvers/specialities.resolver';
 
 @Module({
   providers: [SpecialitiesResolver],

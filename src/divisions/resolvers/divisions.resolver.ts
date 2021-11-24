@@ -1,10 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Division } from './models/division.model';
-import { FetchDivisionArgs } from './dto/fetch-division.args';
-import { DivisionService } from './interfaces/division-service.interface';
+import { Division } from '../models/division.model';
+import { GetDivisionArgs } from '../dto/get-division.args';
+import { DivisionService } from '../interfaces/division-service.interface';
 import { map } from 'rxjs/operators';
-import { EntityResolver } from '../shared/classes/entity-resolver.class';
-import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
+import { EntityResolver } from '../../shared/classes/entity-resolver.class';
+import { GetDivisionsArgs } from '../dto/get-divisions.args';
 
 @Resolver(of => Division)
 export class DivisionsResolver extends EntityResolver {
@@ -17,14 +17,14 @@ export class DivisionsResolver extends EntityResolver {
   }
 
   @Query(returns => Division, { name: 'division' })
-  getDivision(@Args() { id, academyId }: FetchDivisionArgs) {
+  getDivision(@Args() { id, academyId }: GetDivisionArgs) {
     return this.divisionService
       .getDivision({ id, academyId })
       .pipe(map(({ data }) => data.pop()));
   }
 
   @Query(returns => [Division], { name: 'divisions' })
-  getDivisions(@Args() { academyId }: FetchDivisionsArgs) {
+  getDivisions(@Args() { academyId }: GetDivisionsArgs) {
     return this.divisionService
       .listDivisions({ academyId })
       .pipe(map(({ data }) => data));

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GroupsResolver } from './groups.resolver';
+import { GroupsResolver } from './resolvers/groups.resolver';
 
 @Module({
   providers: [GroupsResolver],

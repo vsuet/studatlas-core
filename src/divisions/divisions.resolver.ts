@@ -1,23 +1,32 @@
-import { Args, Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
-import { Observable } from 'rxjs';
+import { Query, Resolver } from '@nestjs/graphql';
 import { Division } from './models/division.model';
-import { DivisionsService } from './divisions.service';
-import { StatisticsService } from '../statistics/statistics.service';
-import { Statistics } from '../statistics/models/statistics.model';
-import { StatisticsFilterArgs } from '../statistics/dto/statistics-filter.args';
+import { FetchDivisionArgs } from './dto/fetch-division.args';
+import { DivisionService } from './interfaces/division-service.interface';
+import { map } from 'rxjs/operators';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
+import { FetchDivisionsArgs } from './dto/fetch-divisions.args';
 
 @Resolver(of => Division)
-export class DivisionsResolver {
-  constructor(
-    private readonly divisionsService: DivisionsService,
-    private readonly statisticsService: StatisticsService,
-  ) {}
+export class DivisionsResolver extends EntityResolver {
+  private divisionService: DivisionService;
 
-  @ResolveProperty()
-  statistics(
-    @Args() { year, semester }: StatisticsFilterArgs,
-    @Parent() { id, academy }: Division,
-  ): Observable<Statistics> {
-    return this.statisticsService.fetchByDivisionId(id, year, semester, academy);
+  onModuleInit() {
+    this.divisionService = this.client.getService<DivisionService>(
+      'DivisionService',
+    );
+  }
+
+  @Query(returns => Division, { name: 'division' })
+  getDivision({ id, academyId }: FetchDivisionArgs) {
+    return this.divisionService
+      .getDivision({ id, academyId })
+      .pipe(map(({ data }) => data.pop()));
+  }
+
+  @Query(returns => [Division], { name: 'divisions' })
+  getDivisions({ academyId }: FetchDivisionsArgs) {
+    return this.divisionService
+      .listDivisions({ academyId })
+      .pipe(map(({ data }) => data));
   }
 }

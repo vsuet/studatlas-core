@@ -1,31 +1,30 @@
-import { Parent, ResolveProperty, Resolver } from '@nestjs/graphql';
-import { Observable } from 'rxjs';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Group } from './models/group.model';
-import { GroupsService } from './groups.service';
-import { SpecialitiesService } from '../specialities/specialities.service';
-import { Speciality } from '../specialities/models/speciality.model';
-import { Book } from '../books/models/book.model';
-import { BooksService } from '../books/books.service';
+import { EntityResolver } from '../shared/classes/entity-resolver.class';
+import { GroupService } from './interfaces/group-service.interface';
+import { FetchGroupArgs } from './dto/fetch-group.args';
+import { map } from 'rxjs/operators';
+import { FetchGroupsArgs } from './dto/fetch-groups.args';
 
 @Resolver(of => Group)
-export class GroupsResolver {
-  constructor(
-    private readonly booksService: BooksService,
-    private readonly groupsService: GroupsService,
-    private readonly specialitiesService: SpecialitiesService,
-  ) {}
+export class GroupsResolver extends EntityResolver {
+  private groupService: GroupService;
 
-  @ResolveProperty()
-  books(
-    @Parent() { id, academy }: Group,
-  ): Observable<Book[]> {
-    return this.booksService.fetchByGroupId(id, academy);
+  onModuleInit() {
+    this.groupService = this.client.getService<GroupService>('GroupService');
   }
 
-  @ResolveProperty()
-  speciality(
-    @Parent() { specialityId, academy }: Group,
-  ): Observable<Speciality> {
-    return this.specialitiesService.fetchById(specialityId, academy);
+  @Query(returns => Group, { name: 'group' })
+  getGroup(@Args() { id, academyId }: FetchGroupArgs) {
+    return this.groupService
+      .getGroup({ id, academyId })
+      .pipe(map(({ data }) => data.pop()));
+  }
+
+  @Query(returns => [Group], { name: 'groups' })
+  getGroups(@Args() { academyId }: FetchGroupsArgs) {
+    return this.groupService
+      .listGroups({ academyId })
+      .pipe(map(({ data }) => data));
   }
 }

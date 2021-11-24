@@ -1,41 +1,60 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@1.1
+  docker: circleci/docker@0.5.17
+
 jobs:
-  build:
-    working_directory: ~/repository
+
+  test:
     docker:
-      - image: circleci/node:12.5.0
+      - image: circleci/node:12.13.0
         environment:
           MONGODB_URI: mongodb://test:password@localhost/studatlas
-      - image: circleci/mongo
-        environment:
-          MONGO_INITDB_ROOT_USERNAME: test
-          MONGO_INITDB_ROOT_PASSWORD: password
-          MONGO_INITDB_DATABASE: studatlas
     steps:
       - checkout
+      - node/with-cache:
+          steps:
+            - run: yarn install
+
+  # linting a dockerfile
+  lint-dockerfile:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/dockerlint:
+          treat-warnings-as-errors: true
+
+  # docker push
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          cache_from: '$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:latest'
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          tag: latest
       - run:
-          name: Waiting for MongoDB to be ready
           command: |
-            for i in `seq 1 30`;
-            do
-              nc -z localhost 27017 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MongoDB && exit 1
-      - run:
-          name: install-yarn
-          command: 'sudo npm install -g yarn@latest'
-      - restore_cache: # special step to restore the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: lint
-          command: yarn lint
+            echo "Digest is: $(</tmp/digest.txt)"
+
+# workflows
+workflows:
+  build-and-test:
+    jobs:
+      - test
+      - lint-dockerfile:
+          requires:
+            - test
+      - build-and-push:
+          requires:
+            - lint-dockerfile
+          filters:
+            branches:
+              only: master

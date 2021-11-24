@@ -11,45 +11,6 @@ type Academy {
   website: String!
   endpoint: String!
   version: String!
-  faculties: [Faculty!]
-  groups: [Group!]
-  divisions: [Division!]
-  specialities: [Speciality!]
-  statistics(
-    mode: String!
-
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): [Statistics!]
-  book(
-    """ID зачетки"""
-    id: ID!
-  ): Book!
-  curriculum(
-    """ID учебного плана"""
-    id: ID!
-  ): Curriculum!
-  division(
-    """ID кафедры"""
-    id: ID!
-  ): Division!
-  document(
-    """ID ведомости"""
-    id: ID!
-  ): Document!
-  faculty(
-    """ID факультета"""
-    id: ID!
-  ): Faculty!
-  group(
-    """ID группы"""
-    id: ID!
-  ): Group!
-  speciality(
-    """ID специальности"""
-    id: ID!
-  ): Speciality!
 }
 
 type Book {
@@ -62,23 +23,7 @@ type Book {
   group: Group!
 
   """Записи из зачетки"""
-  entries(
-    """Семестр"""
-    semester: Int
-  ): [Entry!]!
-}
-
-type Curriculum {
-  id: ID!
-
-  """Название учебного плана"""
-  name: String!
-
-  """Краткое описание учебного плана"""
-  description: String!
-
-  """Практики"""
-  practices: [Practice!]!
+  entries: [Entry!]!
 }
 
 type Division {
@@ -100,11 +45,7 @@ type Division {
   room: String
 
   """Статистика по кафедре"""
-  statistics(
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): Statistics!
+  statistics: Statistics!
 }
 
 type Document {
@@ -162,10 +103,7 @@ type Document {
 
   """Группа"""
   groupName: String!
-  members(
-    """ID зачетки"""
-    bookId: ID
-  ): [DocumentMember!]
+  members: [DocumentMember!]
   saveStories: [SaveStory!]
 }
 
@@ -225,11 +163,7 @@ type Faculty {
   specialities: [Speciality!]
 
   """Статистика по факультету"""
-  statistics(
-    """Учебный год"""
-    year: String
-    semester: Int
-  ): Statistics!
+  statistics: Statistics!
 }
 
 type Group {
@@ -263,48 +197,73 @@ type Group {
   books: [Book!]!
 }
 
-type Mutation {
-  subscribeBook(
-    """ID зачетки"""
-    bookId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Boolean!
-  unsubscribeBook(
-    """ID зачетки"""
-    bookId: ID!
-
-    """ID вуза"""
-    academyId: ID!
-  ): Boolean!
-}
-
-type Practice {
-  """Семестр"""
-  semester: Int!
-
-  """Недель"""
-  weeks: Int!
-
-  """Вид"""
-  type: String!
-
-  """Категория"""
-  category: String!
-
-  """Код кафедры"""
-  divisionId: Int!
-
-  """Кафедра"""
-  division: Division
-}
-
 type Query {
   academy(id: String!): Academy!
   academies: [Academy!]!
   me: UserInfo!
-  watchlist: [WatchlistBook!]!
+  groupBooks(
+    """ID группы"""
+    groupId: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Book!]!
+  bookEntries(
+    """ID зачетки"""
+    id: ID!
+
+    """Семестр"""
+    semester: Int
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Entry!]!
+  division: Division!
+  divisions: [Division!]!
+  document(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Document!
+  saveStories(
+    """ID ведомости"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): [SaveStory!]!
+  faculty(
+    """ID факультета"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Faculty!
+  faculties(academyId: ID!, first: Int = 10, after: ID): [Faculty!]!
+  group(
+    """ID группы"""
+    id: ID!
+
+    """ID вуза"""
+    academyId: ID!
+  ): Group!
+  groups(
+    """ID вуза"""
+    academyId: ID!
+  ): [Group!]!
+  speciality: [Speciality!]!
+  statistics(
+    mode: String!
+
+    """Учебный год"""
+    year: String
+    semester: Int
+
+    """ID вуза"""
+    academyId: ID!
+  ): [Statistics!]!
 }
 
 type SaveStory {
@@ -372,11 +331,4 @@ type UserInfo {
   isVerified: Boolean
   picture: String
   createdAt: String
-  watchlist: [WatchlistBook!]!
-}
-
-type WatchlistBook {
-  bookId: ID!
-  book: Book
-  academy: Academy!
 }

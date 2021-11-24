@@ -1,6 +1,4 @@
-import { Schema } from '../../grabber/interfaces/schema.interface';
-
-export const PRACTICE_SCHEMA: Schema = {
+export const PRACTICE_SCHEMA = {
   attributes: [
     {
       name: 'semester',
